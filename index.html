@@ -34,11 +34,11 @@
   .horario div span:last-child { color:var(--tinta); font-weight:700; text-align:right; }
   .web-contact { display:grid; justify-items:center; gap:8px; margin-top:18px; padding:16px 12px; border:1px solid rgba(167,67,12,.16); border-radius:18px; background:#fffaf6; }
   .web-contact p { margin:0; color:var(--gris); font-size:13px; line-height:1.4; }
-  .web-contact-link { display:inline-flex; min-height:44px; align-items:center; justify-content:center; padding:10px 16px; border-radius:999px; background:var(--terracota); color:var(--crema); font-size:14px; font-weight:700; text-decoration:none; transition:background .15s ease; }
+  .web-contact-link { display:inline-flex; min-height:44px; align-items:center; justify-content:center; padding:10px 16px; border:0; border-radius:999px; background:var(--terracota); color:var(--crema); font:700 14px Arial,Helvetica,sans-serif; cursor:pointer; transition:background .15s ease; }
   .web-contact-link:hover { background:#8e3709; }
   .ubicacion { display:flex; width:fit-content; min-height:44px; align-items:center; justify-content:center; gap:8px; margin:0 auto 16px; padding:8px 14px; border:1px solid rgba(167,67,12,.28); border-radius:999px; color:var(--terracota); font-size:14px; font-weight:700; text-decoration:none; }
   .ubicacion:hover { background:#fff8f1; }
-  .ubicacion:focus-visible, .btn:focus-visible, .ref:focus-visible, .info-trigger:focus-visible, .info-close:focus-visible, .web-contact-link:focus-visible { outline:3px solid #d87b45; outline-offset:3px; }
+  .ubicacion:focus-visible, .btn:focus-visible, .ref:focus-visible, .info-trigger:focus-visible, .info-close:focus-visible, .web-contact-link:focus-visible, .form-submit:focus-visible, .form-cancel:focus-visible, .form-map-link:focus-visible { outline:3px solid #d87b45; outline-offset:3px; }
   .info-trigger { display:inline-flex; min-height:44px; align-items:center; justify-content:center; margin:0 auto 16px; padding:8px 14px; border:0; border-radius:999px; background:transparent; color:var(--gris); font:700 14px Arial,Helvetica,sans-serif; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
   .info-trigger:hover { color:var(--terracota); }
   .info-modal { width:min( calc(100% - 32px), 480px ); max-height:min(80vh,680px); max-height:min(80dvh,680px); overflow:auto; padding:0; border:1px solid rgba(28,26,24,.1); border-radius:24px; background:var(--crema); color:var(--tinta); box-shadow:0 24px 80px rgba(28,26,24,.3); }
@@ -58,6 +58,27 @@
   .info-map-button { display:inline-flex; min-height:46px; align-items:center; justify-content:center; padding:10px 18px; border:1px solid rgba(167,67,12,.25); border-radius:999px; background:#fffaf6; color:var(--terracota); font:700 14px Arial,Helvetica,sans-serif; text-decoration:none; }
   .info-map-button:hover { background:#fff8f1; }
   .info-close { min-height:46px; padding:10px 18px; border:0; border-radius:999px; background:var(--terracota); color:var(--crema); font:700 14px Arial,Helvetica,sans-serif; cursor:pointer; }
+  .form-modal { max-height:min(88vh,760px); max-height:min(88dvh,760px); }
+  .form-content { padding:28px; }
+  .form-content h2 { margin:0 0 8px; font:700 clamp(26px,7vw,34px)/1.15 Georgia,'DejaVu Serif',serif; }
+  .form-intro { margin:0 0 20px; color:var(--gris); font-size:14px; line-height:1.55; }
+  .form-fields { display:grid; gap:14px; }
+  .form-fields label { display:grid; gap:6px; color:var(--tinta); font-size:13px; font-weight:700; text-align:left; }
+  .form-fields input, .form-fields textarea { width:100%; min-height:44px; padding:11px 12px; border:1px solid rgba(28,26,24,.18); border-radius:12px; background:#fffaf6; color:var(--tinta); font:400 15px Arial,Helvetica,sans-serif; }
+  .form-fields textarea { min-height:96px; resize:vertical; }
+  .form-fields input:focus, .form-fields textarea:focus { border-color:var(--terracota); outline:3px solid rgba(167,67,12,.14); }
+  .form-consent { display:flex; align-items:flex-start; gap:9px; color:var(--gris); font-size:12px; font-weight:400!important; line-height:1.45; }
+  .form-consent input { width:18px; min-height:18px; height:18px; flex:none; margin:0; accent-color:var(--terracota); }
+  .form-status { min-height:20px; margin:0; color:#922b1e; font-size:13px; line-height:1.45; }
+  .form-actions { display:flex; justify-content:flex-end; gap:10px; margin-top:18px; }
+  .form-submit { min-height:46px; padding:10px 18px; border:0; border-radius:999px; background:var(--terracota); color:var(--crema); font:700 14px Arial,Helvetica,sans-serif; cursor:pointer; }
+  .form-submit:disabled { cursor:wait; opacity:.65; }
+  .form-cancel { min-height:46px; padding:10px 18px; border:1px solid rgba(28,26,24,.12); border-radius:999px; background:#fffaf6; color:var(--tinta); font:700 14px Arial,Helvetica,sans-serif; cursor:pointer; }
+  .form-success { padding:16px; border-radius:16px; background:#fffaf6; color:var(--tinta); font-size:14px; line-height:1.55; }
+  .form-success p { margin:0 0 14px; }
+  .form-success-actions { display:flex; flex-wrap:wrap; gap:10px; }
+  .form-map-link { display:inline-flex; min-height:44px; align-items:center; justify-content:center; padding:10px 16px; border-radius:999px; background:var(--terracota); color:var(--crema); font-weight:700; text-decoration:none; }
+  [hidden] { display:none!important; }
   .tel { display:none; }
   .bar { position:fixed; right:0; bottom:0; left:0; z-index:10; display:flex; flex-direction:column; align-items:center; gap:10px; padding:14px 16px calc(12px + env(safe-area-inset-bottom,0px)); border-top:1px solid rgba(28,26,24,.08); background:rgba(250,242,235,.94); box-shadow:0 -8px 28px rgba(45,31,20,.08); backdrop-filter:blur(14px); }
   .row { display:flex; width:min(100%,460px); gap:10px; }
@@ -101,7 +122,7 @@
 <body>
 <div class="bar" aria-label="Acciones">
   <div class="row">
-    <a class="btn" id="pedido" href="https://wa.me/5358669970?text=Hola%20DwokD%2C%20vengo%20referido%20desde%20Miguel%20Fotos.%20Quiero%20hacer%20un%20pedido." target="_blank" rel="noopener">Hacer pedido por WhatsApp</a>
+    <button class="btn" id="pedido" type="button">Hacer pedido por WhatsApp</button>
     <button class="btn sec" id="compartir" type="button">Compartir</button>
   </div>
   <a class="ref" id="referido" href="https://wa.me/5358669970?text=Hola%20DwokD%2C%20vengo%20referido%20desde%20Miguel%20Fotos.%20Quiero%20hacer%20un%20pedido." target="_blank" rel="noopener">Referido desde Miguel Fotos</a>
@@ -121,10 +142,81 @@
     </div>
     <section class="web-contact" aria-label="Contacto para crear páginas web">
       <p>¿Quieres una página web para tu negocio?</p>
-      <a class="web-contact-link" href="mailto:aplemainac@gmail.com?subject=Quiero%20pedir%20mi%20p%C3%A1gina%20web&amp;body=Hola%2C%20quiero%20solicitar%20una%20p%C3%A1gina%20web.%20Me%20gustar%C3%ADa%20conversar%20sobre%20los%20detalles.">Pide tu página web ahora</a>
+      <button class="web-contact-link" id="abrir-contacto" type="button">Pide tu página web ahora</button>
     </section>
   </article>
 </main>
+<dialog class="info-modal form-modal" id="pedido-modal" aria-labelledby="pedido-title">
+  <div class="form-content">
+    <p class="info-kicker">Pedido DwokD</p>
+    <h2 id="pedido-title">Cuéntanos qué deseas</h2>
+    <p class="form-intro">Deja tus datos y el detalle del pedido. Al guardarlo podrás continuar por WhatsApp.</p>
+    <form id="pedido-form" class="form-fields">
+      <label>Nombre
+        <input name="customer_name" autocomplete="name" minlength="2" maxlength="100" required>
+      </label>
+      <label>WhatsApp
+        <input name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" pattern="[+]?[0-9][0-9 ()-]{6,23}" maxlength="25" required>
+      </label>
+      <label>¿Qué te gustaría pedir?
+        <textarea name="order_details" minlength="3" maxlength="2000" required></textarea>
+      </label>
+      <label class="form-consent">
+        <input name="consent" type="checkbox" required>
+        <span>Autorizo guardar estos datos para gestionar mi pedido.</span>
+      </label>
+      <p class="form-status" id="pedido-status" role="status" aria-live="polite"></p>
+      <div class="form-actions">
+        <button class="form-cancel" type="button" data-close-dialog="pedido-modal">Cancelar</button>
+        <button class="form-submit" type="submit">Guardar y continuar</button>
+      </div>
+    </form>
+    <section class="form-success" id="pedido-success" role="status" hidden>
+      <p>Guardamos tu solicitud. Para terminar de coordinar el pedido, continúa por WhatsApp.</p>
+      <div class="form-success-actions">
+        <a class="form-map-link" id="pedido-whatsapp" href="#" target="_blank" rel="noopener">Continuar por WhatsApp</a>
+        <button class="form-cancel" type="button" data-close-dialog="pedido-modal">Cerrar</button>
+      </div>
+    </section>
+  </div>
+</dialog>
+<dialog class="info-modal form-modal" id="contacto-modal" aria-labelledby="contacto-title">
+  <div class="form-content">
+    <p class="info-kicker">Tu próximo proyecto</p>
+    <h2 id="contacto-title">Pide tu página web</h2>
+    <p class="form-intro">Cuéntame un poco sobre tu negocio y cómo puedo contactarte.</p>
+    <form id="contacto-form" class="form-fields">
+      <label>Nombre
+        <input name="customer_name" autocomplete="name" minlength="2" maxlength="100" required>
+      </label>
+      <label>Correo electrónico
+        <input name="email" type="email" autocomplete="email" maxlength="254">
+      </label>
+      <label>WhatsApp (opcional si dejas tu correo)
+        <input name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" pattern="[+]?[0-9][0-9 ()-]{6,23}" maxlength="25">
+      </label>
+      <label>¿Qué página necesitas?
+        <textarea name="project_details" minlength="3" maxlength="2000" required></textarea>
+      </label>
+      <label class="form-consent">
+        <input name="consent" type="checkbox" required>
+        <span>Autorizo guardar estos datos para responder a mi solicitud.</span>
+      </label>
+      <p class="form-status" id="contacto-status" role="status" aria-live="polite"></p>
+      <div class="form-actions">
+        <button class="form-cancel" type="button" data-close-dialog="contacto-modal">Cancelar</button>
+        <button class="form-submit" type="submit">Enviar solicitud</button>
+      </div>
+    </form>
+    <section class="form-success" id="contacto-success" role="status" hidden>
+      <p>Gracias. Guardamos tu solicitud y tus datos de contacto.</p>
+      <div class="form-success-actions">
+        <a class="form-map-link" href="mailto:aplemainac@gmail.com">Escribir por correo</a>
+        <button class="form-cancel" type="button" data-close-dialog="contacto-modal">Cerrar</button>
+      </div>
+    </section>
+  </div>
+</dialog>
 <dialog class="info-modal" id="info-modal" aria-labelledby="info-title" aria-describedby="info-description">
   <div class="info-content">
     <p class="info-kicker">Nuestra esencia</p>
@@ -144,22 +236,160 @@
   </div>
 </dialog>
 <script>
+  var SUPABASE_URL = 'https://uazfgshpzvjxsckgkkeu.supabase.co';
+  var SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_FQQiva6dasJhqpaRXqcl0A_2c5k0anJ';
+
+  async function insertSupabaseRow(table, row, keepalive) {
+    var response = await fetch(SUPABASE_URL + '/rest/v1/' + table, {
+      method: 'POST',
+      headers: {
+        apikey: SUPABASE_PUBLISHABLE_KEY,
+        'Content-Type': 'application/json',
+        Prefer: 'return=minimal'
+      },
+      body: JSON.stringify(row),
+      keepalive: Boolean(keepalive)
+    });
+
+    if (!response.ok) {
+      var details = await response.text();
+      var error = new Error('Supabase insert failed for ' + table + ' (' + response.status + '): ' + details.slice(0, 400));
+      console.error(error);
+      throw error;
+    }
+  }
+
   function trackClick(eventName, label) {
     gtag('event', eventName, {
       event_category: 'engagement',
       event_label: label
     });
+    insertSupabaseRow('dwokd_metrics', {
+      event_name: eventName,
+      event_label: label,
+      page_path: window.location.pathname
+    }, true).catch(function(error) {
+      console.error('No se pudo guardar la métrica de interacción.', error);
+    });
   }
 
+  var orderModal = document.getElementById('pedido-modal');
+  var orderForm = document.getElementById('pedido-form');
+  var orderStatus = document.getElementById('pedido-status');
+  var orderSuccess = document.getElementById('pedido-success');
   document.getElementById('pedido').addEventListener('click', function() {
     trackClick('click_hacer_pedido', 'Hacer pedido por WhatsApp');
+    orderModal.showModal();
+  });
+
+  orderForm.addEventListener('submit', async function(event) {
+    event.preventDefault();
+    var submit = orderForm.querySelector('[type="submit"]');
+    var values = new FormData(orderForm);
+    var customerName = values.get('customer_name').trim();
+    var whatsapp = values.get('whatsapp').trim();
+    var orderDetails = values.get('order_details').trim();
+    submit.disabled = true;
+    orderStatus.textContent = 'Guardando tu solicitud...';
+
+    try {
+      await insertSupabaseRow('dwokd_orders', {
+        customer_name: customerName,
+        whatsapp: whatsapp,
+        order_details: orderDetails,
+        consent: values.has('consent')
+      });
+      trackClick('pedido_enviado', 'Solicitud de pedido enviada');
+      var message = 'Hola DwokD, soy ' + customerName + '. Quiero hacer este pedido: ' + orderDetails + '. Mi WhatsApp es ' + whatsapp + '.';
+      document.getElementById('pedido-whatsapp').href = 'https://wa.me/5358669970?text=' + encodeURIComponent(message);
+      orderForm.hidden = true;
+      orderSuccess.hidden = false;
+      orderStatus.textContent = '';
+    } catch (error) {
+      orderStatus.textContent = 'No se pudo guardar el pedido. Revisa tu conexión e inténtalo de nuevo.';
+    } finally {
+      submit.disabled = false;
+    }
+  });
+
+  var contactModal = document.getElementById('contacto-modal');
+  var contactForm = document.getElementById('contacto-form');
+  var contactStatus = document.getElementById('contacto-status');
+  var contactSuccess = document.getElementById('contacto-success');
+  document.getElementById('abrir-contacto').addEventListener('click', function() {
+    trackClick('click_pedir_web', 'Pide tu página web ahora');
+    contactModal.showModal();
+  });
+
+  contactForm.addEventListener('submit', async function(event) {
+    event.preventDefault();
+    var submit = contactForm.querySelector('[type="submit"]');
+    var values = new FormData(contactForm);
+    var email = values.get('email').trim().toLowerCase();
+    var whatsapp = values.get('whatsapp').trim();
+
+    if (!email && !whatsapp) {
+      contactStatus.textContent = 'Escribe un correo o un número de WhatsApp para poder responderte.';
+      contactForm.elements.email.focus();
+      return;
+    }
+
+    submit.disabled = true;
+    contactStatus.textContent = 'Enviando tu solicitud...';
+
+    try {
+      await insertSupabaseRow('dwokd_web_leads', {
+        customer_name: values.get('customer_name').trim(),
+        email: email || null,
+        whatsapp: whatsapp || null,
+        project_details: values.get('project_details').trim(),
+        consent: values.has('consent')
+      });
+      trackClick('contacto_enviado', 'Solicitud de página web enviada');
+      contactForm.hidden = true;
+      contactSuccess.hidden = false;
+      contactStatus.textContent = '';
+    } catch (error) {
+      contactStatus.textContent = 'No se pudo enviar la solicitud. Revisa tu conexión e inténtalo de nuevo.';
+    } finally {
+      submit.disabled = false;
+    }
+  });
+
+  document.querySelectorAll('[data-close-dialog]').forEach(function(button) {
+    button.addEventListener('click', function() {
+      document.getElementById(button.dataset.closeDialog).close();
+    });
+  });
+  [orderModal, contactModal].forEach(function(dialog) {
+    dialog.addEventListener('click', function(event) {
+      if (event.target === dialog) dialog.close();
+    });
+  });
+  orderModal.addEventListener('close', function() {
+    orderForm.reset();
+    orderForm.hidden = false;
+    orderSuccess.hidden = true;
+    orderStatus.textContent = '';
+  });
+  contactModal.addEventListener('close', function() {
+    contactForm.reset();
+    contactForm.hidden = false;
+    contactSuccess.hidden = true;
+    contactStatus.textContent = '';
   });
 
   var infoModal = document.getElementById('info-modal');
   document.getElementById('abrir-info').addEventListener('click', function() {
+    trackClick('click_conoce_dwokd', 'Conoce DwokD');
     var mapImage = infoModal.querySelector('.info-map img');
     if (!mapImage.src) mapImage.src = mapImage.dataset.src;
     infoModal.showModal();
+  });
+  document.querySelectorAll('.ubicacion, .info-map, .info-map-button').forEach(function(link) {
+    link.addEventListener('click', function() {
+      trackClick('click_ubicacion', 'Ver ubicación de DwokD');
+    });
   });
   document.getElementById('cerrar-info').addEventListener('click', function() {
     infoModal.close();
