@@ -11,19 +11,20 @@
   gtag('config', 'G-95YHY2237B');
 </script>
 <meta charset="utf-8">
+<script>if (/[?&]s=/.test(location.search) || /^\/b\/[^\/]+/.test(location.pathname)) document.documentElement.className = "cargando";</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f5eee7">
 <meta name="description" content="DwokD: sushi artesanal, solo a domicilio. Consulta horarios y haz tu pedido por WhatsApp.">
 <title>DwokD · Sushi artesanal</title>
 <style>
-  :root { color-scheme:light; --crema:#FAF2EB; --tinta:#1C1A18; --terracota:#A7430C; --gris:#6E6964; }
+  :root { color-scheme:light; --crema:#FAF2EB; --tinta:#1C1A18; --terracota:#A7430C; --gris:#6E6964; --site-page-bg:#eee5dc; --site-card-width:460px; --site-card-radius:28px; --site-shadow:0 18px 55px rgba(45,31,20,.14); --site-alignment:center; }
   * { box-sizing:border-box; }
   html { min-height:100%; background:#eee5dc; }
-  body { min-height:100vh; min-height:100svh; margin:0; background:radial-gradient(ellipse at top,#fffaf5 0,#eee5dc 70%); color:var(--tinta); font-family:Arial,Helvetica,sans-serif; }
+  body { min-height:100vh; min-height:100svh; margin:0; background:radial-gradient(ellipse at top,#fffaf5 0,var(--site-page-bg) 70%); color:var(--tinta); font-family:Arial,Helvetica,sans-serif; }
   .wrap { display:flex; min-height:100svh; align-items:center; justify-content:center; padding:28px 16px 180px; }
-  .story { width:min(100%,460px); height:auto; padding:18px; border:1px solid rgba(28,26,24,.08); border-radius:28px; background:var(--crema); box-shadow:0 18px 55px rgba(45,31,20,.14); text-align:center; }
+  .story { width:min(100%,var(--site-card-width)); height:auto; padding:18px; border:1px solid rgba(28,26,24,.08); border-radius:var(--site-card-radius); background:var(--crema); box-shadow:var(--site-shadow); text-align:var(--site-alignment); }
   .logo { display:block; width:100%; height:150px; object-fit:contain; border-radius:18px; }
-  .foto { display:block; width:100%; aspect-ratio:1.25; margin:4px 0 20px; object-fit:cover; border-radius:20px; }
+  .foto { display:block; width:100%; aspect-ratio:var(--site-image-ratio,1.25); margin:4px 0 20px; object-fit:var(--site-image-fit,cover); border-radius:20px; }
   h1 { margin:0; color:var(--tinta); font:700 clamp(28px,7vw,36px)/1.15 Georgia,'DejaVu Serif',serif; }
   .punto { width:8px; height:8px; margin:13px auto 10px; border-radius:50%; background:var(--terracota); }
   .dom { display:flex; width:fit-content; align-items:center; gap:8px; margin:0 auto 22px; padding:9px 14px; border:1px solid rgba(167,67,12,.2); border-radius:999px; background:#fff8f1; color:var(--terracota); font-size:14px; font-weight:700; }
@@ -117,6 +118,16 @@
     .wrap { padding-bottom:24px; }
   }
   @media (prefers-reduced-motion:reduce) { .btn { transition:none; } }
+  .cargando .wrap { visibility:hidden; }
+  .catalogo { display:grid; gap:14px; margin:0 0 16px; padding:16px; border-radius:18px; background:#fffaf6; text-align:left; }
+  .cat-title { margin:0 0 6px; color:var(--terracota); font:700 12px Arial,Helvetica,sans-serif; letter-spacing:.12em; text-transform:uppercase; }
+  .cat-list { display:grid; margin:0; padding:0; list-style:none; }
+  .cat-item { display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding:9px 0; border-top:1px solid rgba(28,26,24,.08); }
+  .cat-item:first-child { border-top:0; }
+  .cat-name { display:block; color:var(--tinta); font-size:15px; font-weight:700; line-height:1.3; }
+  .cat-desc { display:block; margin-top:2px; color:var(--gris); font-size:13px; line-height:1.4; }
+  .cat-price { flex:none; color:var(--tinta); font-size:15px; font-weight:700; white-space:nowrap; }
+  .site-message { margin:18px 0 6px; color:var(--gris); font-size:15px; line-height:1.5; }
 </style>
 </head>
 <body>
@@ -140,6 +151,7 @@
       <div><span>Domingo y Lunes</span><span>Cerrado</span></div>
       <div><span>Martes a Sábado</span><span>11:00 AM - 6:00 PM</span></div>
     </div>
+    <section class="catalogo" id="catalogo" aria-label="Catálogo" hidden></section>
     <section class="web-contact" aria-label="Contacto para crear páginas web">
       <p>¿Quieres una página web para tu negocio?</p>
       <button class="web-contact-link" id="abrir-contacto" type="button">Pide tu página web ahora</button>
@@ -238,6 +250,8 @@
 <script>
   var SUPABASE_URL = 'https://uazfgshpzvjxsckgkkeu.supabase.co';
   var SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_FQQiva6dasJhqpaRXqcl0A_2c5k0anJ';
+  var siteBusinessName = 'DwokD';
+  var siteWhatsappNumber = '5358669970';
 
   async function insertSupabaseRow(table, row, keepalive) {
     var response = await fetch(SUPABASE_URL + '/rest/v1/' + table, {
@@ -300,8 +314,8 @@
         consent: values.has('consent')
       });
       trackClick('pedido_enviado', 'Solicitud de pedido enviada');
-      var message = 'Hola DwokD, soy ' + customerName + '. Quiero hacer este pedido: ' + orderDetails + '. Mi WhatsApp es ' + whatsapp + '.';
-      document.getElementById('pedido-whatsapp').href = 'https://wa.me/5358669970?text=' + encodeURIComponent(message);
+      var message = 'Hola ' + siteBusinessName + ', soy ' + customerName + '. Quiero hacer este pedido: ' + orderDetails + '. Mi WhatsApp es ' + whatsapp + '.';
+      document.getElementById('pedido-whatsapp').href = 'https://wa.me/' + siteWhatsappNumber + '?text=' + encodeURIComponent(message);
       orderForm.hidden = true;
       orderSuccess.hidden = false;
       orderStatus.textContent = '';
@@ -418,7 +432,354 @@
     }
 
     window.open('https://wa.me/?text=' + encodeURIComponent(shareData.url), '_blank', 'noopener');
+    window.open('https://wa.me/?text=' + encodeURIComponent(shareData.url), '_blank', 'noopener');
   });
+  function safeSiteColor(value) {
+    return typeof value === 'string' && /^#[0-9a-f]{6}$/i.test(value) ? value : '';
+  }
+
+  function safeMapsUrl(value) {
+    try {
+      var url = new URL(value);
+      return url.protocol === 'https:' && (/(^|\.)google\.[a-z.]+$/i.test(url.hostname) || url.hostname === 'maps.app.goo.gl')
+        ? url.href
+        : '';
+    } catch (error) {
+      return '';
+    }
+  }
+
+  function safeSiteImage(value) {
+    try {
+      var url = new URL(value);
+      return url.origin === new URL(SUPABASE_URL).origin &&
+        url.pathname.indexOf('/storage/v1/object/public/dwokd-site-assets/') === 0
+        ? url.href
+        : '';
+    } catch (error) {
+      return '';
+    }
+  }
+
+  function setSiteText(selector, value) {
+    var node = document.querySelector(selector);
+    if (node && typeof value === 'string') node.textContent = value;
+  }
+
+  function setFormLabel(form, fieldName, value) {
+    var input = form.elements[fieldName];
+    if (!input || typeof value !== 'string' || !input.parentElement) return;
+    for (var index = 0; index < input.parentElement.childNodes.length; index++) {
+      var child = input.parentElement.childNodes[index];
+      if (child.nodeType === Node.TEXT_NODE && child.nodeValue.trim()) {
+        child.nodeValue = value + '\n        ';
+        return;
+      }
+    }
+  }
+
+  function applyPublicSiteSettings(settings) {
+    if (!settings || typeof settings !== 'object') return;
+    var content = settings.content && typeof settings.content === 'object' ? settings.content : {};
+    var design = settings.design && typeof settings.design === 'object' ? settings.design : {};
+    var images = settings.images && typeof settings.images === 'object' ? settings.images : {};
+    if (!Object.keys(content).length) return;
+    var text = function(key, fallback) { return typeof content[key] === 'string' ? content[key] : fallback; };
+    var color = function(key, fallback) { return safeSiteColor(design[key]) || fallback; };
+
+    document.title = text('pageTitle', document.title);
+    var description = document.querySelector('meta[name="description"]');
+    if (description) description.content = text('metaDescription', description.content);
+    setSiteText('#nombre', text('headline', ''));
+    setSiteText('#abrir-info', text('infoButton', ''));
+    setSiteText('.dom', text('deliveryLabel', ''));
+    setSiteText('#pedido', text('orderButton', ''));
+    setSiteText('#compartir', text('shareButton', ''));
+    setSiteText('#referido', text('referralLabel', ''));
+    setSiteText('.ubicacion', text('locationLabel', ''));
+    setSiteText('.web-contact p', text('webContactPrompt', ''));
+    setSiteText('#abrir-contacto', text('webContactButton', ''));
+    setSiteText('#info-title', text('brandName', ''));
+    setSiteText('#info-description', text('brandDescription', ''));
+    setSiteText('#info-modal .info-kicker', text('infoKicker', ''));
+    setSiteText('#pedido-modal .info-kicker', text('orderKicker', ''));
+    setSiteText('#contacto-modal .info-kicker', text('contactKicker', ''));
+    setSiteText('.info-location strong', text('locationName', ''));
+    setSiteText('.info-location div span', text('deliveryNote', ''));
+    setSiteText('#pedido-title', text('orderTitle', ''));
+    setSiteText('#pedido-modal .form-intro', text('orderIntro', ''));
+    setSiteText('#pedido-success p', text('orderSuccess', ''));
+    setSiteText('#pedido-whatsapp', text('orderSuccessButton', ''));
+    setSiteText('#contacto-title', text('contactTitle', ''));
+    setSiteText('#contacto-modal .form-intro', text('contactIntro', ''));
+    setSiteText('#contacto-success p', text('contactSuccess', ''));
+    setSiteText('#contacto-success a', text('mailLinkLabel', ''));
+    setSiteText('.info-map-button', text('mapsButton', ''));
+    setSiteText('#cerrar-info', text('infoCloseButton', ''));
+
+    var schedule = document.querySelectorAll('.horario div');
+    if (schedule[0]) {
+      schedule[0].children[0].textContent = text('closedDays', schedule[0].children[0].textContent);
+      schedule[0].children[1].textContent = text('closedStatus', schedule[0].children[1].textContent);
+    }
+    if (schedule[1]) {
+      schedule[1].children[0].textContent = text('openDays', schedule[1].children[0].textContent);
+      schedule[1].children[1].textContent = text('openHours', schedule[1].children[1].textContent);
+    }
+
+    var orderForm = document.getElementById('pedido-form');
+    var contactForm = document.getElementById('contacto-form');
+    setFormLabel(orderForm, 'customer_name', text('orderNameLabel', 'Nombre'));
+    setFormLabel(orderForm, 'whatsapp', text('orderWhatsappLabel', 'WhatsApp'));
+    setFormLabel(orderForm, 'order_details', text('orderDetailsLabel', '¿Qué te gustaría pedir?'));
+    setFormLabel(contactForm, 'customer_name', text('contactNameLabel', 'Nombre'));
+    setFormLabel(contactForm, 'email', text('contactEmailLabel', 'Correo electrónico'));
+    setFormLabel(contactForm, 'whatsapp', text('contactWhatsappLabel', 'WhatsApp'));
+    setFormLabel(contactForm, 'project_details', text('contactProjectLabel', '¿Qué página necesitas?'));
+    var consent = orderForm.querySelector('.form-consent span');
+    if (consent) consent.textContent = text('orderConsent', consent.textContent);
+    consent = contactForm.querySelector('.form-consent span');
+    if (consent) consent.textContent = text('contactConsent', consent.textContent);
+    orderForm.querySelector('[data-close-dialog]').textContent = text('orderCancel', 'Cancelar');
+    orderForm.querySelector('[type="submit"]').textContent = text('orderSubmit', 'Guardar y continuar');
+    document.querySelector('#pedido-success [data-close-dialog]').textContent = text('orderClose', 'Cerrar');
+    contactForm.querySelector('[data-close-dialog]').textContent = text('contactCancel', 'Cancelar');
+    contactForm.querySelector('[type="submit"]').textContent = text('contactSubmit', 'Enviar solicitud');
+    document.querySelector('#contacto-success [data-close-dialog]').textContent = text('contactClose', 'Cerrar');
+
+    var email = text('contactEmail', 'aplemainac@gmail.com');
+    if (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      document.querySelector('#contacto-success a').href = 'mailto:' + email;
+    }
+    var phone = text('whatsappNumber', '5358669970').replace(/\D/g, '');
+    if (/^[0-9]{8,15}$/.test(phone)) {
+      siteWhatsappNumber = phone;
+      siteBusinessName = text('brandName', 'DwokD');
+      document.getElementById('pedido-whatsapp').href = 'https://wa.me/' + phone;
+      var referral = document.getElementById('referido');
+      referral.href = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(text('referralMessage', 'Hola DwokD, quiero hacer un pedido.'));
+    }
+
+    var mapUrl = safeMapsUrl(text('mapsUrl', ''));
+    if (mapUrl) {
+      document.querySelectorAll('.ubicacion, .info-map, .info-map-button').forEach(function(link) {
+        link.href = mapUrl;
+      });
+    }
+    var imageMap = {
+      logo: document.querySelector('.logo'),
+      photo: document.querySelector('.foto'),
+      map: document.querySelector('.info-map img')
+    };
+    Object.keys(imageMap).forEach(function(key) {
+      var url = safeSiteImage(images[key + 'Url']);
+      if (url && imageMap[key]) imageMap[key].src = url;
+    });
+
+    var root = document.documentElement;
+    var primary = color('primaryColor', '#A7430C');
+    var background = color('pageBackground', '#EEE5DC');
+    var cardBackground = color('cardBackground', '#FAF2EB');
+    root.style.setProperty('--terracota', primary);
+    root.style.setProperty('--site-page-bg', background);
+    root.style.setProperty('--crema', cardBackground);
+    root.style.setProperty('--tinta', color('textColor', '#1C1A18'));
+    root.style.setProperty('--site-card-width', Math.max(320, Math.min(700, Number(design.cardWidth) || 460)) + 'px');
+    root.style.setProperty('--site-card-radius', Math.max(8, Math.min(48, Number(design.cornerRadius) || 28)) + 'px');
+    root.style.setProperty('--site-alignment', design.alignment === 'left' ? 'left' : 'center');
+    root.style.setProperty('--site-image-fit', design.imageFit === 'contain' ? 'contain' : 'cover');
+    root.style.setProperty('--site-image-ratio', ['1', '0.8'].includes(String(design.imageRatio)) ? String(design.imageRatio) : '1.25');
+    root.style.setProperty('--site-shadow', design.shadow === 'soft'
+      ? '0 8px 26px rgba(45,31,20,.10)'
+      : design.shadow === 'strong'
+        ? '0 24px 70px rgba(45,31,20,.24)'
+        : '0 18px 55px rgba(45,31,20,.14)');
+    document.querySelector('meta[name="theme-color"]').content = background;
+    var story = document.getElementById('story');
+    story.style.background = cardBackground;
+    story.style.boxShadow = design.shadow === 'soft'
+      ? '0 8px 26px rgba(45,31,20,.10)'
+      : design.shadow === 'strong'
+        ? '0 24px 70px rgba(45,31,20,.24)'
+        : '0 18px 55px rgba(45,31,20,.14)';
+    story.querySelector('.logo').hidden = design.showLogo === false;
+    story.querySelector('.foto').hidden = design.showPhoto === false;
+    document.getElementById('referido').hidden = design.showReferral === false;
+    document.querySelector('.web-contact').hidden = design.showWebContact === false;
+    document.querySelector('.dom').hidden = design.showDelivery === false;
+    document.querySelector('.horario').hidden = design.showHours === false;
+    document.querySelector('.ubicacion').hidden = design.showLocation === false;
+    document.getElementById('abrir-info').hidden = design.showInfo === false;
+    document.querySelector('.info-map').hidden = design.showMapPreview === false;
+  }
+
+  async function loadPublicSiteSettings() {
+    try {
+      var response = await fetch(SUPABASE_URL + '/rest/v1/dwokd_site_settings?id=eq.true&select=settings', {
+        headers: { apikey: SUPABASE_PUBLISHABLE_KEY },
+        cache: 'no-store'
+      });
+      if (!response.ok) throw new Error('Public site settings request failed (' + response.status + ').');
+      var rows = await response.json();
+      if (rows[0] && rows[0].settings) applyPublicSiteSettings(rows[0].settings);
+    } catch (error) {
+      console.error('No se pudo cargar la configuración del sitio; se conservan los valores locales.', error);
+    }
+  }
+
+  /* ---------- Modo multi-sitio: app.html?s=mi-slug ---------- */
+  // Dirección pública: /b/mi-slug/ (también acepta ?s=mi-slug)
+  var siteSlug = '';
+  var pathMatch = window.location.pathname.match(/\/b\/([^\/]+)\/?$/);
+  if (pathMatch) {
+    try { siteSlug = decodeURIComponent(pathMatch[1]); } catch (error) { siteSlug = ''; }
+  } else {
+    siteSlug = new URLSearchParams(window.location.search).get('s') || '';
+  }
+  siteSlug = siteSlug.trim().toLowerCase();
+  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(siteSlug) || siteSlug.length > 40) siteSlug = '';
+
+  async function restGet(path) {
+    var response = await fetch(SUPABASE_URL + '/rest/v1/' + path, {
+      headers: { apikey: SUPABASE_PUBLISHABLE_KEY },
+      cache: 'no-store'
+    });
+    if (!response.ok) throw new Error('Request failed (' + response.status + ') for ' + path.split('?')[0]);
+    return response.json();
+  }
+
+  function hideEl(selector) {
+    var node = document.querySelector(selector);
+    if (node) node.hidden = true;
+  }
+
+  function showSiteMessage(title, message) {
+    document.title = title;
+    hideEl('.bar');
+    var story = document.getElementById('story');
+    Array.prototype.forEach.call(story.children, function(child) { child.hidden = true; });
+    var heading = document.getElementById('nombre');
+    heading.textContent = title;
+    heading.hidden = false;
+    var note = document.createElement('p');
+    note.className = 'site-message';
+    note.textContent = message;
+    story.appendChild(note);
+  }
+
+  function formatPrice(value) {
+    var number = Number(value);
+    if (!isFinite(number) || number <= 0) return '';
+    return number.toLocaleString('es', { minimumFractionDigits: number % 1 ? 2 : 0, maximumFractionDigits: 2 });
+  }
+
+  async function loadCatalog(siteId) {
+    var box = document.getElementById('catalogo');
+    try {
+      var filter = 'site_id=eq.' + encodeURIComponent(siteId);
+      var results = await Promise.all([
+        restGet('catalog_categories?select=id,name,position&' + filter + '&order=position.asc,created_at.asc'),
+        restGet('catalog_items?select=id,category_id,name,description,price,position&' + filter + '&is_available=eq.true&order=position.asc,created_at.asc')
+      ]);
+      var categories = results[0];
+      var items = results[1];
+      var shown = 0;
+      box.textContent = '';
+      categories.forEach(function(category) {
+        var own = items.filter(function(item) { return item.category_id === category.id; });
+        if (!own.length) return;
+        var group = document.createElement('div');
+        var title = document.createElement('h2');
+        title.className = 'cat-title';
+        title.textContent = category.name;
+        var list = document.createElement('ul');
+        list.className = 'cat-list';
+        own.forEach(function(item) {
+          var row = document.createElement('li');
+          row.className = 'cat-item';
+          var text = document.createElement('div');
+          var name = document.createElement('span');
+          name.className = 'cat-name';
+          name.textContent = item.name;
+          text.appendChild(name);
+          if (item.description) {
+            var desc = document.createElement('span');
+            desc.className = 'cat-desc';
+            desc.textContent = item.description;
+            text.appendChild(desc);
+          }
+          row.appendChild(text);
+          var price = formatPrice(item.price);
+          if (price) {
+            var priceNode = document.createElement('span');
+            priceNode.className = 'cat-price';
+            priceNode.textContent = price;
+            row.appendChild(priceNode);
+          }
+          list.appendChild(row);
+          shown++;
+        });
+        group.appendChild(title);
+        group.appendChild(list);
+        box.appendChild(group);
+      });
+      box.hidden = shown === 0;
+    } catch (error) {
+      console.error('No se pudo cargar el catálogo.', error);
+      box.hidden = true;
+    }
+  }
+
+  async function loadTenantSite() {
+    try {
+      var rows = await restGet('sites?slug=eq.' + encodeURIComponent(siteSlug) + '&select=id,name,settings');
+      var site = rows[0];
+      if (!site) {
+        showSiteMessage('Página no disponible', 'Esta página no existe o todavía no está publicada.');
+        return;
+      }
+      var settings = site.settings && typeof site.settings === 'object' ? site.settings : {};
+      var content = settings.content && typeof settings.content === 'object' ? settings.content : {};
+      var images = settings.images && typeof settings.images === 'object' ? settings.images : {};
+      var configured = Object.keys(content).length > 0;
+
+      // DwokD conserva su contenido e imágenes incluidos en este archivo.
+      var isLegacy = siteSlug === 'dwokd';
+
+      if (configured) {
+        applyPublicSiteSettings(settings);
+      } else if (isLegacy) {
+        await loadPublicSiteSettings();
+      } else {
+        document.title = site.name;
+        var description = document.querySelector('meta[name="description"]');
+        if (description) description.content = site.name;
+        setSiteText('#nombre', site.name);
+        ['.dom', '.horario', '.ubicacion', '#abrir-info', '#referido', '.web-contact'].forEach(hideEl);
+      }
+
+      // Las imágenes incluidas en este archivo son de DwokD: en otros sitios solo se muestran las propias.
+      if (!isLegacy) {
+        if (!safeSiteImage(images.logoUrl)) hideEl('.logo');
+        if (!safeSiteImage(images.photoUrl)) hideEl('.foto');
+        if (!safeSiteImage(images.mapUrl)) hideEl('.info-map');
+        // Sin número de WhatsApp propio no hay a dónde enviar pedidos.
+        if (!/^[0-9]{8,15}$/.test(String(content.whatsappNumber || '').replace(/\D/g, ''))) {
+          hideEl('#pedido');
+          hideEl('#referido');
+        }
+      }
+
+      await loadCatalog(site.id);
+    } catch (error) {
+      console.error('No se pudo cargar el sitio.', error);
+      showSiteMessage('No se pudo cargar', 'Revisa tu conexión e inténtalo de nuevo.');
+    } finally {
+      document.documentElement.classList.remove('cargando');
+    }
+  }
+
+  if (siteSlug) loadTenantSite(); else loadPublicSiteSettings();
 
 </script>
 </body>
