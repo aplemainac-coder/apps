@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [{ "type": "query", "key": "s" }],
+      "destination": "/app.html"
+    },
+    {
+      "source": "/b/:slug",
+      "destination": "/app.html"
+    }
+  ]
+}
