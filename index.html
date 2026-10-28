@@ -129,6 +129,116 @@
   .cat-price { flex:none; color:var(--tinta); font-size:15px; font-weight:700; white-space:nowrap; }
   .site-message { margin:18px 0 6px; color:var(--gris); font-size:15px; line-height:1.5; }
 </style>
+
+<style id="catalogo-redesign">
+/* DwokD · catálogo visual renovado */
+:root{--crema:#fffdf9;--tinta:#202723;--terracota:#13745f;--gris:#65716b;--site-page-bg:#edf2ef;--site-card-width:520px;--site-card-radius:28px;--site-shadow:0 24px 70px rgba(22,48,39,.13)}
+html{background:#edf2ef}
+body{font-family:Inter,"Segoe UI",Arial,sans-serif;background:radial-gradient(ellipse at 50% -10%,#fff 0,#edf2ef 68%);letter-spacing:-.01em}
+.wrap{align-items:flex-start;padding:28px 16px 170px}
+.story{padding:clamp(18px,4vw,28px);border:1px solid rgba(25,53,43,.08);border-radius:28px;background:rgba(255,253,249,.97);box-shadow:0 24px 70px rgba(22,48,39,.13);text-align:left}
+.logo{height:clamp(95px,18vw,150px);margin:0 auto 14px}
+.foto{aspect-ratio:1.45;border-radius:22px;margin:0 0 24px}
+h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(32px,7vw,44px);letter-spacing:-.045em;line-height:1.05}
+.punto{margin:17px 0 12px;width:36px;height:4px;border-radius:10px}
+.dom{margin:0 0 20px;padding:8px 12px;background:#e8f4ef;border-color:#d1e8de;color:#12634f;font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+.dom::before{width:7px;height:7px}
+.ubicacion{margin:0 0 16px;border-color:#d7e6df;color:#12634f;background:#fff;border-radius:12px}
+.horario,.catalogo,.web-contact{padding:18px;border:1px solid #e7ece8;border-radius:18px;background:#fff}
+.horario{gap:12px;font-size:13px}
+.horario div:first-child{padding-bottom:12px}
+.horario div span:last-child{font-weight:700}
+.catalogo{gap:0;margin:0 0 16px}
+.cat-title{margin:0 0 14px;color:#13745f;font-size:11px;letter-spacing:.16em}
+.cat-list{gap:0}
+.cat-item{align-items:center;gap:14px;padding:15px 0;border-top:1px solid #edf0ed}
+.cat-name{font-size:15px;letter-spacing:-.02em}
+.cat-desc{font-size:13px;line-height:1.5;color:#758079}
+.cat-price{padding:7px 10px;border-radius:10px;background:#eaf5f0;color:#12634f;font-size:14px}
+.site-message{padding:12px 14px;border-radius:12px;background:#fff4e8;color:#8a4b1b;font-size:13px}
+.web-contact{gap:10px;margin-top:16px;text-align:center}
+.web-contact p{font-size:13px}
+.web-contact-link,.btn{min-height:48px;border-radius:13px;background:#13745f;box-shadow:0 5px 14px rgba(19,116,95,.15)}
+.web-contact-link:hover,.btn:hover{background:#105b4b}
+.btn.sec{border:1px solid #dce6e0;background:#fff;color:#23332c;box-shadow:none}
+.btn.sec:hover{background:#edf5f1}
+.bar{gap:9px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid rgba(22,48,39,.1);background:rgba(255,253,249,.94);box-shadow:0 -8px 30px rgba(22,48,39,.08)}
+.row{width:min(100%,520px);gap:10px}
+.row .btn:first-child{flex:1}
+.ref{font-size:12px;color:#68776f}
+.info-modal,.form-modal{border-radius:24px}
+.info-content,.form-content{padding:clamp(22px,5vw,32px)}
+.info-close,.form-submit{border-radius:12px;background:#13745f}
+@media(max-width:520px){
+ .wrap{padding:14px 10px 160px}
+ .story{padding:17px;border-radius:23px}
+ .logo{height:100px;margin-bottom:12px}
+ .foto{border-radius:17px}
+ .cat-item{align-items:flex-start}
+ .cat-name{font-size:14px}
+ .cat-price{font-size:13px;padding:6px 8px}
+ .bar{padding-left:10px;padding-right:10px}
+ .btn{padding:11px 12px;font-size:13px}
+ .btn.sec{min-width:94px}
+}
+@media(prefers-reduced-motion:no-preference){
+ .story{animation:catalogoEntrada .45s ease-out both}
+ .cat-item{transition:background .18s ease}
+ .cat-item:hover{background:#f8fbf9}
+}
+@keyframes catalogoEntrada{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style>
+
+
+<style id="catalogo-imagenes">
+  .cat-item{display:grid;grid-template-columns:76px minmax(0,1fr) auto;align-items:center;gap:13px}
+  .cat-image{display:block;width:76px;height:76px;object-fit:cover;border-radius:13px;background:#eef0ef;border:1px solid #e2e7e4}
+  .cat-copy{min-width:0}
+  .cat-name{overflow-wrap:anywhere}
+  @media(max-width:520px){
+    .cat-item{grid-template-columns:64px minmax(0,1fr) auto;gap:10px}
+    .cat-image{width:64px;height:64px;border-radius:11px}
+  }
+  @media(max-width:360px){
+    .cat-item{grid-template-columns:54px minmax(0,1fr);gap:9px}
+    .cat-image{width:54px;height:54px}
+    .cat-price{grid-column:2;justify-self:start;margin-top:2px}
+  }
+</style>
+<style id="producto-modal-css">
+  .cat-item{cursor:pointer}
+  .cat-item:focus-visible{outline:3px solid rgba(19,116,95,.35);outline-offset:2px;border-radius:12px}
+  .prod-wrap{position:relative}
+  .prod-close{position:absolute;top:12px;right:12px;z-index:1;width:40px;height:40px;border:0;border-radius:50%;background:rgba(255,255,255,.92);color:var(--tinta);font:400 24px/1 Arial,Helvetica,sans-serif;cursor:pointer;box-shadow:0 2px 10px rgba(28,26,24,.18)}
+  .prod-close:focus-visible{outline:3px solid #13745f;outline-offset:2px}
+  .prod-photo{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#eef0ef}
+  .prod-body{padding:clamp(20px,5vw,28px)}
+  .prod-cat{margin:0 0 6px;color:var(--gris);font-size:13px}
+  .prod-modal .prod-name{margin:0 0 8px;padding-right:44px}
+  .prod-price{margin:0;color:#12634f;font-size:19px;font-weight:700}
+  .prod-desc{margin:12px 0 0;color:#4f4944;font-size:15px;line-height:1.6}
+  .prod-form{margin-top:20px;padding-top:20px;border-top:1px solid rgba(28,26,24,.1)}
+  .prod-form h3{margin:0;font-size:15px}
+  .prod-form textarea{min-height:72px}
+  .prod-body .form-success{margin-top:20px}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;opacity:0}
+  .qty{display:inline-flex;align-items:center;gap:4px;border:1px solid rgba(28,26,24,.15);border-radius:12px;background:#fffaf6}
+  .qty button{width:40px;height:40px;border:0;background:none;color:var(--tinta);font:700 20px/1 Arial,sans-serif;cursor:pointer}
+  .qty output{min-width:24px;text-align:center;font-weight:700}
+  .prod-buy{display:flex;align-items:center;gap:12px;margin-top:18px}
+  .prod-buy .form-submit{flex:1}
+  .prod-share{margin-top:10px;width:100%}
+  .cart-bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:center;padding:12px 16px calc(12px + env(safe-area-inset-bottom));pointer-events:none}
+  .cart-bar button{pointer-events:auto;width:min(520px,100%);box-shadow:0 10px 30px rgba(22,48,39,.28)}
+  .cart-lines{display:grid;gap:10px;margin:0 0 12px;padding:0;list-style:none}
+  .cart-lines li{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14px}
+  .cart-total{margin:0 0 16px;font-weight:700;font-size:17px;color:#12634f}
+  .cat-tools{display:grid;gap:10px;margin-bottom:14px}
+  .cat-tools input{width:100%;min-height:44px;padding:10px 12px;border:1px solid #dfe6e2;border-radius:12px;font:400 15px Arial,sans-serif;background:#fff}
+  .cat-chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px}
+  .cat-chips button{flex:none;min-height:36px;padding:6px 14px;border:1px solid #dfe6e2;border-radius:999px;background:#fff;color:var(--tinta);font:700 13px Arial,sans-serif;cursor:pointer}
+  .cat-chips button[aria-pressed="true"]{background:#13745f;border-color:#13745f;color:#fff}
+</style>
 </head>
 <body>
 <div class="bar" aria-label="Acciones">
@@ -158,6 +268,72 @@
     </section>
   </article>
 </main>
+<dialog class="info-modal form-modal prod-modal" id="producto-modal" aria-labelledby="producto-title">
+  <div class="prod-wrap">
+    <button class="prod-close" type="button" data-close-dialog="producto-modal" aria-label="Cerrar">&times;</button>
+    <img class="prod-photo" id="producto-foto" alt="" hidden>
+    <div class="prod-body">
+      <p class="prod-cat" id="producto-categoria" hidden></p>
+      <h2 class="prod-name" id="producto-title"></h2>
+      <p class="prod-price" id="producto-precio" hidden></p>
+      <p class="prod-desc" id="producto-descripcion" hidden></p>
+      <div class="prod-buy">
+        <div class="qty" role="group" aria-label="Cantidad">
+          <button type="button" id="qty-minus" aria-label="Quitar uno">&minus;</button>
+          <output id="qty-val">1</output>
+          <button type="button" id="qty-plus" aria-label="Añadir uno">+</button>
+        </div>
+        <button class="form-submit" type="button" id="prod-add">Añadir al pedido</button>
+      </div>
+      <button class="form-cancel prod-share" type="button" id="prod-share">Compartir producto</button>
+    </div>
+  </div>
+</dialog>
+<div class="cart-bar" id="cart-bar" hidden><button class="form-submit" type="button" id="cart-open"></button></div>
+<dialog class="info-modal form-modal" id="carrito-modal" aria-labelledby="carrito-title">
+  <div class="form-content">
+    <h2 id="carrito-title">Tu pedido</h2>
+    <ul class="cart-lines" id="cart-lines"></ul>
+    <p class="cart-total" id="cart-total"></p>
+    <form id="carrito-form" class="form-fields">
+      <label>Nombre
+        <input name="customer_name" autocomplete="name" minlength="2" maxlength="100" required>
+      </label>
+      <label>Teléfono
+        <input name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" pattern="[+]?[0-9][0-9 ()-]{6,23}" maxlength="25" required>
+      </label>
+      <label>Dirección de entrega
+        <input name="address" autocomplete="street-address" minlength="5" maxlength="200" required>
+      </label>
+      <label>Hora de entrega (opcional)
+        <input name="time" maxlength="60" placeholder="Ej. hoy a las 3:00 PM">
+      </label>
+      <label>Correo electrónico (opcional)
+        <input name="email" type="email" autocomplete="email" maxlength="254">
+      </label>
+      <label>Notas (opcional)
+        <textarea name="notes" maxlength="500" placeholder="Indicaciones para la entrega"></textarea>
+      </label>
+      <label class="hp" aria-hidden="true">Web<input name="website" tabindex="-1" autocomplete="off"></label>
+      <label class="form-consent">
+        <input name="consent" type="checkbox" required>
+        <span>Autorizo guardar estos datos para gestionar mi pedido.</span>
+      </label>
+      <p class="form-status" id="carrito-status" role="status" aria-live="polite"></p>
+      <div class="form-actions">
+        <button class="form-cancel" type="button" data-close-dialog="carrito-modal">Seguir viendo</button>
+        <button class="form-submit" type="submit">Pedir por WhatsApp</button>
+      </div>
+    </form>
+    <section class="form-success" id="carrito-success" role="status" hidden>
+      <p>Guardamos tu pedido. Si WhatsApp no se abrió, continúa desde aquí.</p>
+      <div class="form-success-actions">
+        <a class="form-map-link" id="carrito-whatsapp" href="#" target="_blank" rel="noopener">Continuar por WhatsApp</a>
+        <button class="form-cancel" type="button" data-close-dialog="carrito-modal">Cerrar</button>
+      </div>
+    </section>
+  </div>
+</dialog>
 <dialog class="info-modal form-modal" id="pedido-modal" aria-labelledby="pedido-title">
   <div class="form-content">
     <p class="info-kicker">Pedido DwokD</p>
@@ -173,6 +349,7 @@
       <label>¿Qué te gustaría pedir?
         <textarea name="order_details" minlength="3" maxlength="2000" required></textarea>
       </label>
+      <label class="hp" aria-hidden="true">Web<input name="website" tabindex="-1" autocomplete="off"></label>
       <label class="form-consent">
         <input name="consent" type="checkbox" required>
         <span>Autorizo guardar estos datos para gestionar mi pedido.</span>
@@ -210,6 +387,7 @@
       <label>¿Qué página necesitas?
         <textarea name="project_details" minlength="3" maxlength="2000" required></textarea>
       </label>
+      <label class="hp" aria-hidden="true">Web<input name="website" tabindex="-1" autocomplete="off"></label>
       <label class="form-consent">
         <input name="consent" type="checkbox" required>
         <span>Autorizo guardar estos datos para responder a mi solicitud.</span>
@@ -300,6 +478,7 @@
     event.preventDefault();
     var submit = orderForm.querySelector('[type="submit"]');
     var values = new FormData(orderForm);
+    if (antiSpam(values, orderStatus)) return;
     var customerName = values.get('customer_name').trim();
     var whatsapp = values.get('whatsapp').trim();
     var orderDetails = values.get('order_details').trim();
@@ -339,6 +518,7 @@
     event.preventDefault();
     var submit = contactForm.querySelector('[type="submit"]');
     var values = new FormData(contactForm);
+    if (antiSpam(values, contactStatus)) return;
     var email = values.get('email').trim().toLowerCase();
     var whatsapp = values.get('whatsapp').trim();
 
@@ -392,6 +572,213 @@
     contactSuccess.hidden = true;
     contactStatus.textContent = '';
   });
+
+  var productModal = document.getElementById('producto-modal');
+  var cartModal = document.getElementById('carrito-modal');
+  var cartForm = document.getElementById('carrito-form');
+  var cartStatus = document.getElementById('carrito-status');
+  var cartSuccess = document.getElementById('carrito-success');
+  var cart = [], currentProduct = null, currentQty = 1, productsById = {};
+
+  function money(n) { return formatPrice(n) || '0'; }
+  function cartCount() { return cart.reduce(function(t, l) { return t + l.qty; }, 0); }
+  function cartTotal() { return cart.reduce(function(t, l) { return t + l.priceNum * l.qty; }, 0); }
+  function setProductText(id, value) {
+    var node = document.getElementById(id);
+    node.textContent = value || '';
+    node.hidden = !value;
+  }
+  function antiSpam(values, statusEl) {
+    if (values.get('website')) return true;
+    var last = 0;
+    try { last = Number(localStorage.getItem('dk-last-send')) || 0; } catch (e) {}
+    if (Date.now() - last < 20000) {
+      statusEl.textContent = 'Espera unos segundos antes de enviar otra solicitud.';
+      return true;
+    }
+    try { localStorage.setItem('dk-last-send', String(Date.now())); } catch (e) {}
+    return false;
+  }
+
+  function changeQty(index, delta) {
+    cart[index].qty = Math.min(20, cart[index].qty + delta);
+    if (cart[index].qty < 1) cart.splice(index, 1);
+    renderCart();
+    if (!cart.length && cartModal.open) cartModal.close();
+  }
+  function renderCart() {
+    var count = cartCount(), total = cartTotal();
+    document.getElementById('cart-bar').hidden = !count;
+    document.getElementById('cart-open').textContent = 'Ver pedido (' + count + ')' + (total ? ' · ' + money(total) : '');
+    var list = document.getElementById('cart-lines');
+    list.textContent = '';
+    cart.forEach(function(line, index) {
+      var li = document.createElement('li');
+      var label = document.createElement('span');
+      label.textContent = line.name + (line.priceNum ? ' · ' + money(line.priceNum * line.qty) : '');
+      var box = document.createElement('span');
+      box.className = 'qty';
+      var out = document.createElement('output');
+      out.textContent = line.qty;
+      [['−', 'Quitar uno de ', -1], ['+', 'Añadir uno de ', 1]].forEach(function(b, i) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = b[0];
+        btn.setAttribute('aria-label', b[1] + line.name);
+        btn.addEventListener('click', function() { changeQty(index, b[2]); });
+        if (i === 1) box.appendChild(out);
+        box.appendChild(btn);
+      });
+      li.appendChild(label);
+      li.appendChild(box);
+      list.appendChild(li);
+    });
+    document.getElementById('cart-total').textContent = total ? 'Total: ' + money(total) : '';
+  }
+
+  function setQty(n) {
+    currentQty = Math.max(1, Math.min(20, n));
+    document.getElementById('qty-val').textContent = currentQty;
+  }
+  function openProduct(product) {
+    currentProduct = product;
+    setQty(1);
+    var photo = document.getElementById('producto-foto');
+    if (product.image) { photo.src = product.image; photo.alt = product.name; }
+    else { photo.removeAttribute('src'); photo.alt = ''; }
+    photo.hidden = !product.image;
+    setProductText('producto-categoria', product.category);
+    document.getElementById('producto-title').textContent = product.name;
+    setProductText('producto-precio', product.price);
+    setProductText('producto-descripcion', product.description);
+    history.replaceState(null, '', '#p=' + product.id);
+    trackClick('click_producto', product.name.slice(0, 100));
+    productModal.showModal();
+  }
+  function openFromHash() {
+    var m = /^#p=([\w-]+)$/.exec(location.hash);
+    if (m && productsById[m[1]]) openProduct(productsById[m[1]]);
+  }
+
+  document.getElementById('qty-minus').addEventListener('click', function() { setQty(currentQty - 1); });
+  document.getElementById('qty-plus').addEventListener('click', function() { setQty(currentQty + 1); });
+  document.getElementById('prod-add').addEventListener('click', function() {
+    var line = cart.filter(function(l) { return l.id === currentProduct.id; })[0];
+    if (line) line.qty = Math.min(20, line.qty + currentQty);
+    else cart.push({ id: currentProduct.id, name: currentProduct.name, category: currentProduct.category, priceNum: currentProduct.priceNum, qty: currentQty });
+    trackClick('agregar_producto', currentProduct.name.slice(0, 100));
+    productModal.close();
+    renderCart();
+  });
+  document.getElementById('prod-share').addEventListener('click', function() {
+    var url = location.origin + location.pathname + location.search + '#p=' + currentProduct.id;
+    if (navigator.share) navigator.share({ title: currentProduct.name, url: url }).catch(function() {});
+    else window.open('https://wa.me/?text=' + encodeURIComponent(currentProduct.name + ' ' + url), '_blank', 'noopener');
+  });
+  document.getElementById('cart-open').addEventListener('click', function() { cartModal.showModal(); });
+
+  cartForm.addEventListener('submit', async function(event) {
+    event.preventDefault();
+    var submit = cartForm.querySelector('[type="submit"]');
+    var values = new FormData(cartForm);
+    if (!cart.length || antiSpam(values, cartStatus)) return;
+    var v = function(k) { return values.get(k).trim(); };
+    var name = v('customer_name'), phone = v('whatsapp'), address = v('address'), when = v('time'), email = v('email'), notes = v('notes');
+    var total = cartTotal(), count = cartCount();
+    var items = cart.map(function(l) {
+      return '• ' + l.qty + ' x ' + l.name + (l.category ? ' (' + l.category + ')' : '') + (l.priceNum ? ' — ' + money(l.priceNum * l.qty) : '');
+    });
+    var details = ['Pedido:'].concat(items);
+    if (total) details.push('Total: ' + money(total));
+    details.push('Dirección: ' + address);
+    if (when) details.push('Hora de entrega: ' + when);
+    if (email) details.push('Correo: ' + email);
+    if (notes) details.push('Notas: ' + notes);
+    var message = 'Hola ' + siteBusinessName + ', quiero hacer este pedido:\n' + items.join('\n') +
+      (total ? '\nTotal: ' + money(total) : '') + '\n\nMis datos:\n• Nombre: ' + name + '\n• Teléfono: ' + phone +
+      '\n• Dirección: ' + address + (when ? '\n• Hora: ' + when : '') + (email ? '\n• Correo: ' + email : '') + (notes ? '\n• Notas: ' + notes : '');
+
+    submit.disabled = true;
+    cartStatus.textContent = 'Guardando tu pedido...';
+    try {
+      await insertSupabaseRow('dwokd_orders', {
+        customer_name: name,
+        whatsapp: phone,
+        order_details: details.join('\n').slice(0, 2000),
+        consent: values.has('consent')
+      });
+      trackClick('pedido_enviado', ('Pedido: ' + count + ' producto(s)').slice(0, 100));
+      var link = document.getElementById('carrito-whatsapp');
+      link.href = 'https://wa.me/' + siteWhatsappNumber + '?text=' + encodeURIComponent(message);
+      cart = [];
+      renderCart();
+      cartForm.hidden = true;
+      cartSuccess.hidden = false;
+      cartStatus.textContent = '';
+      document.getElementById('cart-lines').hidden = true;
+      document.getElementById('cart-total').hidden = true;
+      link.click();
+    } catch (error) {
+      try { localStorage.removeItem('dk-last-send'); } catch (e) {}
+      cartStatus.textContent = 'No se pudo guardar el pedido. Revisa tu conexión e inténtalo de nuevo.';
+    } finally {
+      submit.disabled = false;
+    }
+  });
+  [productModal, cartModal].forEach(function(dialog) {
+    dialog.addEventListener('click', function(event) { if (event.target === dialog) dialog.close(); });
+  });
+  productModal.addEventListener('close', function() {
+    if (/^#p=/.test(location.hash)) history.replaceState(null, '', location.pathname + location.search);
+  });
+  cartModal.addEventListener('close', function() {
+    cartForm.reset();
+    cartForm.hidden = false;
+    cartSuccess.hidden = true;
+    cartStatus.textContent = '';
+    document.getElementById('cart-lines').hidden = false;
+    document.getElementById('cart-total').hidden = false;
+  });
+
+  function buildCatalogTools(box) {
+    var groups = Array.prototype.filter.call(box.children, function(n) { return n.tagName === 'DIV'; });
+    if (box.querySelectorAll('.cat-item').length < 5) return;
+    var bar = document.createElement('div');
+    bar.className = 'cat-tools';
+    var input = document.createElement('input');
+    input.type = 'search';
+    input.maxLength = 60;
+    input.placeholder = 'Buscar en el catálogo';
+    input.setAttribute('aria-label', 'Buscar en el catálogo');
+    var chips = document.createElement('div');
+    chips.className = 'cat-chips';
+    var active = -1;
+    function apply() {
+      var q = input.value.trim().toLowerCase();
+      groups.forEach(function(g, i) {
+        var any = false;
+        g.querySelectorAll('.cat-item').forEach(function(r) {
+          var show = !q || r.textContent.toLowerCase().indexOf(q) > -1;
+          r.hidden = !show;
+          if (show) any = true;
+        });
+        g.hidden = !any || (active > -1 && active !== i);
+      });
+      Array.prototype.forEach.call(chips.children, function(c, i) { c.setAttribute('aria-pressed', String(i - 1 === active)); });
+    }
+    ['Todo'].concat(groups.map(function(g) { return g.querySelector('.cat-title').textContent; })).forEach(function(label, i) {
+      var c = document.createElement('button');
+      c.type = 'button';
+      c.textContent = label;
+      c.addEventListener('click', function() { active = i - 1; apply(); });
+      chips.appendChild(c);
+    });
+    input.addEventListener('input', apply);
+    bar.appendChild(input);
+    bar.appendChild(chips);
+    box.insertBefore(bar, box.firstChild);
+    apply();
+  }
 
   var infoModal = document.getElementById('info-modal');
   document.getElementById('abrir-info').addEventListener('click', function() {
@@ -679,7 +1066,7 @@
       var filter = 'site_id=eq.' + encodeURIComponent(siteId);
       var results = await Promise.all([
         restGet('catalog_categories?select=id,name,position&' + filter + '&order=position.asc,created_at.asc'),
-        restGet('catalog_items?select=id,category_id,name,description,price,position&' + filter + '&is_available=eq.true&order=position.asc,created_at.asc')
+        restGet('catalog_items?select=id,category_id,name,description,price,position,image_url&' + filter + '&is_available=eq.true&order=position.asc,created_at.asc')
       ]);
       var categories = results[0];
       var items = results[1];
@@ -697,7 +1084,38 @@
         own.forEach(function(item) {
           var row = document.createElement('li');
           row.className = 'cat-item';
+          var product = {
+            name: item.name,
+            category: category.name,
+            price: formatPrice(item.price),
+            description: item.description || '',
+            image: safeSiteImage(item.image_url),
+            id: item.id,
+            priceNum: Number(item.price) || 0
+          };
+          productsById[item.id] = product;
+          row.tabIndex = 0;
+          row.setAttribute('role', 'button');
+          row.setAttribute('aria-label', 'Ver ' + item.name);
+          row.addEventListener('click', function() { openProduct(product); });
+          row.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              openProduct(product);
+            }
+          });
+          var image = document.createElement('img');
+          image.className = 'cat-image';
+          image.alt = '';
+          image.loading = 'lazy';
+          image.decoding = 'async';
+          image.src = safeSiteImage(item.image_url) || 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9ICNlZWYwZWYiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiNhZWI1YjEiIHN0cm9rZS13aWR0aD0iMi41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxyZWN0IHg9IjEzIiB5PSIxOCIgd2lkdGg9IjM4IiBoZWlnaHQ9IjI4IiByeD0iNyIvPjxwYXRoIGQ9Ik0xOCAyNWgyOE0xOCAzOWgyOCIvPjxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjYiLz48L2c+PC9zdmc+';
+          image.addEventListener('error', function() {
+            if (image.src !== 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9ICNlZWYwZWYiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiNhZWI1YjEiIHN0cm9rZS13aWR0aD0iMi41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxyZWN0IHg9IjEzIiB5PSIxOCIgd2lkdGg9IjM4IiBoZWlnaHQ9IjI4IiByeD0iNyIvPjxwYXRoIGQ9Ik0xOCAyNWgyOE0xOCAzOWgyOCIvPjxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjYiLz48L2c+PC9zdmc+') image.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9ICNlZWYwZWYiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiNhZWI1YjEiIHN0cm9rZS13aWR0aD0iMi41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxyZWN0IHg9IjEzIiB5PSIxOCIgd2lkdGg9IjM4IiBoZWlnaHQ9IjI4IiByeD0iNyIvPjxwYXRoIGQ9Ik0xOCAyNWgyOE0xOCAzOWgyOCIvPjxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjYiLz48L2c+PC9zdmc+';
+          });
+          row.appendChild(image);
           var text = document.createElement('div');
+          text.className = 'cat-copy';
           var name = document.createElement('span');
           name.className = 'cat-name';
           name.textContent = item.name;
@@ -724,6 +1142,8 @@
         box.appendChild(group);
       });
       box.hidden = shown === 0;
+      buildCatalogTools(box);
+      openFromHash();
     } catch (error) {
       console.error('No se pudo cargar el catálogo.', error);
       box.hidden = true;
