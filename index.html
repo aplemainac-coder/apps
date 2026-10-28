@@ -81,9 +81,13 @@
 
   var SUPABASE_URL = 'https://uazfgshpzvjxsckgkkeu.supabase.co';
   var SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_FQQiva6dasJhqpaRXqcl0A_2c5k0anJ';
-  // Dirección del catálogo de cada negocio. Si tu hosting reescribe /b/<slug>/, cambia a '/b/' y '/'.
-  var CATALOG_PREFIX = 'app.html?s=';
+  // Dirección pública del catálogo de cada negocio: https://appcat.vercel.app/?s=<slug>
+  var CATALOG_PREFIX = '/?s=';
   var CATALOG_SUFFIX = '';
+
+  // Respaldo: si llega un enlace de catálogo (/?s=slug) y el servidor no lo reescribe a app.html, redirige.
+  var legacy = new URLSearchParams(location.search).get('s');
+  if (legacy) { location.replace('app.html?s=' + encodeURIComponent(legacy)); return; }
 
   var grid = document.getElementById('grid');
   var tools = document.getElementById('tools');
