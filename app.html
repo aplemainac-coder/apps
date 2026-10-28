@@ -545,8 +545,18 @@ h1{font-family:inherit;font-weight:700;letter-spacing:-.035em;line-height:1.08;t
   var SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_FQQiva6dasJhqpaRXqcl0A_2c5k0anJ';
   var siteBusinessName = 'DwokD';
   var siteWhatsappNumber = '5358669970';
+  var tenantSiteId = ''; // id del negocio que se está viendo (modo ?s=slug)
+  var tenantSitePromise = null; // se resuelve cuando el negocio terminó de cargar
 
   async function insertSupabaseRow(table, row, keepalive) {
+    // Pedidos y métricas se asocian al negocio para que aparezcan en su panel.
+    // Si el negocio aún está cargando, espera un momento para no guardar el pedido sin sitio.
+    if (!tenantSiteId && tenantSitePromise && !keepalive && (table === 'dwokd_orders' || table === 'dwokd_metrics')) {
+      await Promise.race([tenantSitePromise, new Promise(function(resolve) { setTimeout(resolve, 4000); })]);
+    }
+    if (tenantSiteId && (table === 'dwokd_orders' || table === 'dwokd_metrics') && !row.site_id) {
+      row = Object.assign({ site_id: tenantSiteId }, row);
+    }
     var response = await fetch(SUPABASE_URL + '/rest/v1/' + table, {
       method: 'POST',
       headers: {
@@ -1273,6 +1283,7 @@ h1{font-family:inherit;font-weight:700;letter-spacing:-.035em;line-height:1.08;t
         showSiteMessage('Página no disponible', 'Esta página no existe o todavía no está publicada.');
         return;
       }
+      tenantSiteId = site.id;
       var settings = site.settings && typeof site.settings === 'object' ? site.settings : {};
       var content = settings.content && typeof settings.content === 'object' ? settings.content : {};
       var images = settings.images && typeof settings.images === 'object' ? settings.images : {};
@@ -1314,7 +1325,7 @@ h1{font-family:inherit;font-weight:700;letter-spacing:-.035em;line-height:1.08;t
     }
   }
 
-  if (siteSlug) loadTenantSite(); else loadPublicSiteSettings();
+  if (siteSlug) tenantSitePromise = loadTenantSite(); else loadPublicSiteSettings();
 
 </script>
 </body>
