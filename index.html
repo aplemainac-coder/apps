@@ -3,243 +3,440 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#f5eee7">
-<meta name="description" content="Descubre los negocios registrados y entra a su catálogo para hacer tu pedido por WhatsApp.">
+<meta name="theme-color" content="#9da388">
 <title>Negocios registrados</title>
+<meta name="description" content="Descubre los negocios registrados, mira su catálogo y haz tu pedido por WhatsApp.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Negocios registrados">
+<meta property="og:description" content="Descubre los negocios registrados, mira su catálogo y haz tu pedido por WhatsApp.">
+<meta property="og:url" content="https://appcat.vercel.app/">
+<meta property="og:image" content="https://appcat.vercel.app/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
 <style>
-  :root { color-scheme:light; --crema:#FAF2EB; --tinta:#1C1A18; --terracota:#A7430C; --gris:#6E6964; --fondo:#eee5dc; --linea:rgba(28,26,24,.1); }
-  * { box-sizing:border-box; }
-  html { background:var(--fondo); }
-  body { min-height:100svh; margin:0; background:radial-gradient(ellipse at top,#fffaf5 0,var(--fondo) 70%); color:var(--tinta); font-family:Arial,Helvetica,sans-serif; }
-  a { color:inherit; }
-  .page { width:min(100%,1040px); margin:0 auto; padding:calc(36px + env(safe-area-inset-top,0px)) 18px calc(48px + env(safe-area-inset-bottom,0px)); }
-
-  header { display:grid; gap:10px; margin-bottom:26px; }
-  h1 { margin:0; font:700 clamp(32px,7vw,52px)/1.08 Georgia,'DejaVu Serif',serif; letter-spacing:-.01em; }
-  .lead { max-width:52ch; margin:0; color:var(--gris); font-size:16px; line-height:1.55; }
-
-  .tools { display:flex; flex-wrap:wrap; align-items:center; gap:12px 16px; margin-bottom:22px; }
-  .search { position:relative; flex:1 1 260px; max-width:420px; }
-  .search input { width:100%; min-height:46px; padding:10px 16px; border:1px solid var(--linea); border-radius:999px; background:#fffaf6; color:var(--tinta); font:inherit; font-size:15px; }
-  .search input::placeholder { color:#9a938c; }
-  .search input:focus-visible { outline:3px solid #d87b45; outline-offset:2px; }
-  .count { color:var(--gris); font-size:14px; }
-
-  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:18px; margin:0; padding:0; list-style:none; }
-  .card { display:flex; height:100%; flex-direction:column; overflow:hidden; border:1px solid var(--linea); border-radius:22px; background:var(--crema); text-decoration:none; box-shadow:0 10px 30px rgba(45,31,20,.08); transition:transform .18s ease, box-shadow .18s ease; }
-  .card:hover { transform:translateY(-3px); box-shadow:0 16px 40px rgba(45,31,20,.15); }
-  .card:focus-visible { outline:3px solid #d87b45; outline-offset:3px; }
-  .cover { position:relative; aspect-ratio:16/10; background:#e9ddd1; }
-  .cover img { display:block; width:100%; height:100%; object-fit:cover; }
-  .cover .initial { display:grid; width:100%; height:100%; place-items:center; color:var(--terracota); font:700 64px Georgia,'DejaVu Serif',serif; }
-  .logo { position:absolute; left:14px; bottom:-22px; width:52px; height:52px; border:3px solid var(--crema); border-radius:50%; background:#fff; object-fit:cover; }
-  .body { display:flex; flex:1; flex-direction:column; gap:6px; padding:30px 18px 18px; }
-  .body h2 { margin:0; font:700 20px/1.2 Georgia,'DejaVu Serif',serif; }
-  .body p { margin:0; color:var(--gris); font-size:14px; line-height:1.45; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-  .go { margin-top:auto; padding-top:10px; color:var(--terracota); font-size:14px; font-weight:700; }
-  .card:hover .go { text-decoration:underline; text-underline-offset:3px; }
-
-  .skeleton { height:250px; border-radius:22px; background:linear-gradient(90deg,#e9ddd1 25%,#f3e9df 50%,#e9ddd1 75%); background-size:200% 100%; animation:shimmer 1.3s infinite linear; }
-  @keyframes shimmer { to { background-position:-200% 0; } }
-
-  .state { display:grid; justify-items:center; gap:12px; padding:48px 16px; border:1px dashed rgba(167,67,12,.3); border-radius:22px; background:#fffaf6; text-align:center; }
-  .state h2 { margin:0; font:700 22px Georgia,'DejaVu Serif',serif; }
-  .state p { max-width:42ch; margin:0; color:var(--gris); font-size:15px; line-height:1.5; }
-  .btn { min-height:44px; padding:10px 18px; border:0; border-radius:999px; background:var(--terracota); color:var(--crema); font:700 14px Arial,Helvetica,sans-serif; cursor:pointer; }
-  .btn:hover { background:#8e3709; }
-  .btn:focus-visible { outline:3px solid #d87b45; outline-offset:3px; }
-  [hidden] { display:none !important; }
-  @media (prefers-reduced-motion:reduce) { .card, .skeleton { transition:none; animation:none; } .card:hover { transform:none; } }
+:root{--ol:#9da388;--oll:#b0b59b;--old:#4b5239;--c1:#fcf8f4;--c2:#f4efe8;--c3:#e8e0d5;--esp:#2a2421;--gr:#5f5750;--sans:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;--serif:"Playfair Display",Georgia,serif;color-scheme:light}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--c2)}
+body{margin:0;min-height:100svh;background:var(--c2);color:var(--esp);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+::selection{background:var(--ol);color:#fff}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid var(--old);outline-offset:3px}
+.dark :focus-visible{outline-color:var(--oll)}
+.wrap{width:min(100%,1160px);margin:0 auto;padding:0 clamp(16px,4vw,48px)}
+.btn{min-height:46px;padding:10px 22px;border:1px solid transparent;border-radius:999px;background:var(--esp);color:var(--c1);font:700 14px var(--sans);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:background .2s,transform .15s}
+.btn:hover{background:var(--old)}.btn:active{transform:scale(.97)}.btn:disabled{opacity:.6;cursor:wait}
+.btn.alt{background:transparent;color:var(--esp);border-color:rgba(42,36,33,.35)}.btn.alt:hover{background:rgba(42,36,33,.08)}
+.btn.light{background:var(--c1);color:var(--esp)}.btn.light:hover{background:#fff}
+.btn.line{background:transparent;color:var(--c1);border-color:rgba(252,248,244,.4)}.btn.line:hover{background:rgba(255,255,255,.1)}
+.row{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end}
+/* hero */
+.hero{position:relative;overflow:hidden;background:var(--ol);padding-top:env(safe-area-inset-top,0px)}
+.hero::before{content:"";position:absolute;right:-140px;top:18%;width:520px;height:520px;border-radius:50%;background:rgba(176,181,155,.5);filter:blur(60px);pointer-events:none}
+.nav{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:22px}
+.logo-sq{display:grid;place-items:center;width:48px;height:48px;border-radius:16px;background:var(--esp);color:var(--c1);font:800 24px var(--sans);text-decoration:none;box-shadow:0 8px 20px rgba(42,36,33,.25)}
+.links{display:none;gap:30px;font-size:14px;font-weight:600}.links a{color:rgba(42,36,33,.9);text-decoration:none}.links a:hover{color:var(--esp)}
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr);align-items:center;gap:32px;padding-block:16px clamp(40px,7vw,84px)}
+h1{margin:0;line-height:.95;text-transform:uppercase}
+h1 .big{display:block;color:var(--c1);font-weight:800;letter-spacing:-.045em;font-size:clamp(3rem,12vw,8rem)}
+h1 .sm{display:block;margin-top:2px;color:var(--esp);font-weight:800;letter-spacing:-.03em;text-transform:lowercase;font-size:clamp(1.7rem,5.5vw,3.3rem)}
+.tag-l{margin:20px 0 8px;font-size:clamp(17px,2.4vw,20px);font-weight:600;line-height:1.3}
+.lead{margin:0 0 22px;max-width:44ch;color:rgba(42,36,33,.85);line-height:1.55}
+.hero .row{justify-content:flex-start}
+/* mockups */
+.mock{margin:0;min-width:0}
+.phones{display:flex;justify-content:center;align-items:flex-start;gap:12px}
+.phone{flex:0 1 200px;min-width:0;aspect-ratio:9/17;padding:7px;border-radius:28px;background:var(--esp);box-shadow:0 22px 50px rgba(42,36,33,.35)}
+.phone+.phone{margin-top:30px}
+.scr{display:flex;flex-direction:column;gap:5px;height:100%;padding:8px;overflow:hidden;border-radius:21px;background:var(--c1);font:700 9px/1.2 var(--sans)}
+.scr h4{margin:0;font:700 11px var(--serif)}
+.cv2{height:56px;border-radius:10px;background:linear-gradient(135deg,var(--oll),var(--old))}
+.r2{display:flex;justify-content:space-between;gap:6px;padding:6px;border-radius:8px;background:var(--c2);font-weight:500}.r2 b{font-weight:800}
+.w2{margin-top:auto;padding:7px;border-radius:999px;background:#1f7a45;color:#fff;text-align:center}
+.k2{display:grid;grid-template-columns:1fr 1fr;gap:5px}.k2 div{padding:6px;border-radius:8px;background:var(--c2);font-weight:500}.k2 b{display:block;font-size:14px}
+.b2{display:flex;align-items:flex-end;gap:4px;height:58px;padding:6px;border-radius:8px;background:var(--c2)}.b2 i{flex:1;border-radius:3px;background:var(--old)}
+.cap{margin:12px 0 0;text-align:center;color:rgba(42,36,33,.75);font-size:12px}
+/* secciones */
+.sec{padding:clamp(48px,8vw,88px) 0}
+.h2{margin:0;font-weight:800;letter-spacing:-.035em;line-height:1.08;font-size:clamp(1.9rem,5vw,3.4rem)}
+.h2 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--old)}
+.sec-head{display:grid;gap:10px;margin-bottom:24px}.sec-head p{margin:0;max-width:52ch;color:var(--gr);line-height:1.6}
+.tools{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:12px}
+.tools input,.tools select{min-height:48px;padding:8px 18px;border:1px solid var(--c3);border-radius:999px;background:var(--c1);color:var(--esp);font:inherit;font-size:15px}
+.tools input{flex:1 1 240px;max-width:400px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.chip{min-height:40px;padding:6px 16px;border:1px solid var(--c3);border-radius:999px;background:var(--c1);color:var(--esp);font:700 13px var(--sans);cursor:pointer}
+.chip[aria-pressed=true]{background:var(--esp);border-color:var(--esp);color:var(--c1)}
+.meta{margin:0 0 18px;color:var(--gr);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:22px;margin:0;padding:0;list-style:none}
+.card{position:relative;display:flex;height:100%;flex-direction:column;overflow:hidden;border:1px solid var(--c3);border-radius:28px;background:var(--c1);box-shadow:0 10px 30px rgba(42,36,33,.07);transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 44px rgba(42,36,33,.14)}
+.cover{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--c3)}
+.cover>img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.25,1,.5,1)}.card:hover .cover>img{transform:scale(1.05)}
+.ini{display:grid;width:100%;height:100%;place-items:center;color:var(--old);font:600 64px var(--serif);background:linear-gradient(135deg,var(--c3),var(--oll))}
+.logo{position:absolute;left:14px;bottom:10px;width:50px;height:50px;border:3px solid var(--c1);border-radius:50%;background:#fff;object-fit:cover}
+.tag{position:absolute;top:12px;padding:5px 11px;border-radius:999px;background:rgba(252,248,244,.94);font:700 12px var(--sans)}
+.tag.st{left:12px}.tag.fe{right:12px;background:var(--esp);color:var(--c1)}.tag.open{color:#1d6b35}.tag.closed{color:#8a3b1c}
+.body{display:flex;flex:1;flex-direction:column;gap:6px;padding:18px}
+.body h2{margin:0;font:800 20px/1.2 var(--sans);letter-spacing:-.02em}
+.body h2 a{color:inherit;text-decoration:none}.body h2 a::after{content:"";position:absolute;inset:0}
+.sub{margin:0;color:var(--gr);font-size:13px}.desc{margin:0;color:#4a433e;font-size:14px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.prods{margin:4px 0 0;padding:10px 12px;border-radius:16px;background:var(--c2);list-style:none;display:grid;gap:4px;font-size:13px}
+.prods li{display:flex;justify-content:space-between;gap:10px}.prods li span:last-child{font-weight:800}.prods .more{color:var(--gr)}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:12px}
+.go{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;background:var(--esp);color:var(--c1);font-size:12px;font-weight:700;transition:background .2s}.go::after{content:"→"}.card:hover .go{background:var(--ol)}
+.btn.wa{position:relative;z-index:2;min-height:40px;padding:8px 16px;font-size:13px;background:#1f7a45}.btn.wa:hover{background:#17603a}
+.sk{height:300px;border-radius:28px;background:linear-gradient(90deg,var(--c3) 25%,var(--c2) 50%,var(--c3) 75%);background-size:200% 100%;animation:sh 1.3s infinite linear}@keyframes sh{to{background-position:-200% 0}}
+.state{display:grid;justify-items:center;gap:12px;padding:48px 16px;border:1px dashed rgba(75,82,57,.4);border-radius:28px;background:var(--c1);text-align:center}
+.state h2{margin:0;font:800 22px var(--sans)}.state p{max-width:42ch;margin:0;color:var(--gr);line-height:1.5}
+/* marquee */
+.mq{overflow:hidden;border-block:1px solid rgba(255,255,255,.1);background:var(--esp);color:var(--c2);padding:14px 0;white-space:nowrap;user-select:none}
+.mq-t{display:flex;width:max-content;animation:mq 30s linear infinite}.mq:hover .mq-t{animation-play-state:paused}
+.mq-t span{padding-right:2.5rem;font-size:14px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.mq-t span:nth-child(even){color:var(--oll)}
+@keyframes mq{to{transform:translateX(-50%)}}
+/* sección oscura */
+.sec.dark{background:var(--esp);color:var(--c1)}
+.dark .h2 em{color:var(--oll)}
+.dark .intro{display:grid;gap:14px;max-width:640px;margin-bottom:34px}.dark .intro p{margin:0;color:rgba(244,239,232,.8);line-height:1.6}
+.pn{font-size:14px;font-weight:700;color:var(--oll)}
+.ben{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px}
+.ben div{padding:20px;border:1px solid rgba(255,255,255,.1);border-radius:24px;background:rgba(255,255,255,.07);backdrop-filter:blur(10px)}
+.ben .i{font-size:24px}.ben b{display:block;margin:8px 0 4px;font-size:16px}.ben small{color:rgba(244,239,232,.75);font-size:14px;line-height:1.5}
+.steps{display:grid;gap:10px;margin:30px 0;padding:0;list-style:none;counter-reset:s;color:rgba(244,239,232,.9)}
+.steps li{display:flex;gap:12px;align-items:center;counter-increment:s}
+.steps li::before{content:counter(s);flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--oll);color:var(--esp);font-size:13px;font-weight:800}
+.dark .row{justify-content:flex-start}
+/* pie */
+footer{padding:clamp(40px,6vw,64px) 0 calc(28px + env(safe-area-inset-bottom,0px));background:var(--c2)}
+.fgrid{display:grid;gap:28px;grid-template-columns:minmax(0,1fr)}
+footer h3{margin:12px 0 6px;font-size:22px;font-weight:800}footer p{margin:0;max-width:36ch;color:var(--gr);font-size:14px;line-height:1.6}
+footer h5{margin:0 0 10px;color:var(--old);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+footer ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:14px;font-weight:500}footer a{color:var(--gr);text-decoration:none}footer a:hover{color:var(--esp)}
+.copy{margin-top:34px;padding-top:18px;border-top:1px solid rgba(232,224,213,.9);color:var(--gr);font-size:12px}
+/* diálogo */
+dialog{width:min(calc(100% - 32px),460px);max-height:92svh;overflow:auto;padding:0;border:1px solid var(--c3);border-radius:28px;background:var(--c1);color:var(--esp);box-shadow:0 24px 80px rgba(42,36,33,.35)}
+dialog::backdrop{background:rgba(42,36,33,.6);backdrop-filter:blur(4px)}
+form,.ok{display:grid;gap:12px;padding:26px}form h2,.ok h2{margin:0;font:800 26px var(--sans);letter-spacing:-.02em}form p,.ok p{margin:0;color:var(--gr);font-size:14px;line-height:1.5}
+label{display:grid;gap:6px;font-size:14px;font-weight:700}
+label input,label textarea{padding:12px 14px;border:1px solid var(--c3);border-radius:16px;background:var(--c2);font:400 15px var(--sans);color:var(--esp)}
+label.chk{display:flex;gap:10px;align-items:flex-start;font-weight:400;color:var(--gr)}label.hp{position:absolute;left:-9999px}
+.msg{min-height:18px;color:var(--old);font-size:13px;font-weight:600}
+/* responsive */
+@media(min-width:720px){.links{display:flex}.fgrid{grid-template-columns:1.6fr 1fr 1fr}}
+@media(min-width:900px){.hero-grid{grid-template-columns:1.1fr .9fr}}
+@media(hover:none){.card:hover{transform:none}.card:hover .cover>img{transform:none}}
+@media(max-width:560px){.nav .btn{min-height:42px;padding:8px 14px;font-size:13px}.hero .row .btn,.dark .row .btn{flex:1 1 100%}.btn{min-height:48px}.tools input{max-width:none}.phone{flex-basis:44%}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.card,.cover>img,.sk,.btn{transition:none;animation:none}.mq-t{animation:none}.card:hover{transform:none}}
 </style>
 </head>
 <body>
-<main class="page">
-  <header>
-    <h1>Negocios registrados</h1>
-    <p class="lead">Elige un negocio para ver su catálogo, sus horarios y hacer tu pedido por WhatsApp.</p>
-  </header>
 
-  <div class="tools" id="tools" hidden>
-    <div class="search"><input id="q" type="search" placeholder="Buscar un negocio" aria-label="Buscar un negocio" autocomplete="off"></div>
-    <span class="count" id="count" aria-live="polite"></span>
+<div class="hero">
+  <div class="wrap">
+    <header class="nav">
+      <a class="logo-sq" href="#" aria-label="Negocios registrados">N</a>
+      <nav class="links" aria-label="Principal"><a href="#negocios">Negocios</a><a href="#para-negocios">Para negocios</a></nav>
+      <a class="btn" id="panel-top" href="https://admcat.vercel.app/" target="_blank" rel="noopener">Acceso para negocios</a>
+    </header>
+    <div class="hero-grid">
+      <div>
+        <h1><span class="big">negocios</span><span class="sm">registrados</span></h1>
+        <p class="tag-l">Catálogos locales<br>para pedir por WhatsApp</p>
+        <p class="lead">Elige un negocio para ver su catálogo, sus horarios y pedir por WhatsApp.</p>
+        <div class="row">
+          <a class="btn" href="#negocios">Ver negocios →</a>
+          <button class="btn alt" id="reg-open" type="button">Registra tu negocio</button>
+        </div>
+      </div>
+      <figure class="mock">
+        <div class="phones" aria-hidden="true">
+          <div class="phone"><div class="scr"><h4>Tu negocio</h4><div class="cv2"></div><div class="r2"><span>Producto uno</span><b>12</b></div><div class="r2"><span>Producto dos</span><b>8</b></div><div class="r2"><span>Producto tres</span><b>15</b></div><div class="w2">Pedir por WhatsApp</div></div></div>
+          <div class="phone"><div class="scr"><h4>Tu panel</h4><div class="k2"><div>Pedidos<b>24</b></div><div>Solicitudes<b>6</b></div></div><div class="b2"><i style="height:35%"></i><i style="height:55%"></i><i style="height:40%"></i><i style="height:80%"></i><i style="height:65%"></i><i style="height:100%"></i></div><div class="r2"><span>Nuevo pedido</span><b>Hoy</b></div><div class="r2"><span>Descargar CSV</span><b>↓</b></div></div></div>
+        </div>
+        <figcaption class="cap">Ilustración: el catálogo que ven tus clientes y el panel que usas tú.</figcaption>
+      </figure>
+    </div>
   </div>
+</div>
 
-  <ul class="grid" id="grid" aria-busy="true">
-    <li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li>
-  </ul>
-
-  <div class="state" id="state" hidden>
-    <h2 id="state-title"></h2>
-    <p id="state-text"></p>
-    <button class="btn" id="retry" type="button" hidden>Reintentar</button>
+<main>
+<section id="negocios" class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="h2">Elige un negocio,<br><em>pide por WhatsApp</em></h2>
+      <p>Busca por nombre, zona o categoría y abre su catálogo completo.</p>
+    </div>
+    <div class="tools" id="tools" hidden>
+      <input id="q" type="search" placeholder="Buscar un negocio" aria-label="Buscar un negocio" autocomplete="off">
+      <select id="zone" aria-label="Filtrar por zona" hidden></select>
+      <button class="chip" id="open-now" type="button" aria-pressed="false" hidden>Abiertos ahora</button>
+    </div>
+    <div class="chips" id="cats" hidden></div>
+    <p class="meta" id="meta" aria-live="polite"></p>
+    <ul class="grid" id="grid" aria-busy="true"><li class="sk"></li><li class="sk"></li><li class="sk"></li></ul>
+    <div class="state" id="state" hidden><h2 id="st-t"></h2><p id="st-p"></p><button class="btn" id="st-b" type="button"></button></div>
   </div>
+</section>
+
+<div class="mq" aria-hidden="true"><div class="mq-t">
+  <span>Catálogos locales</span><span>// Pide por WhatsApp</span><span>// Registra tu negocio</span><span>// Tu enlace propio</span>
+  <span>Catálogos locales</span><span>// Pide por WhatsApp</span><span>// Registra tu negocio</span><span>// Tu enlace propio</span>
+</div></div>
+
+<section id="para-negocios" class="sec dark">
+  <div class="wrap">
+    <div class="intro">
+      <p class="pn" id="promo-n" hidden></p>
+      <h2 class="h2">¿Tienes un negocio?<br><em>Ten tu propio catálogo</em></h2>
+      <p>Publica tus productos con fotos y precios, recibe pedidos por WhatsApp y gestiónalo todo desde tu panel.</p>
+    </div>
+    <div class="ben">
+      <div><span class="i" aria-hidden="true">🛍️</span><b>Tu enlace propio</b><small>Un catálogo listo para compartir en redes y WhatsApp.</small></div>
+      <div><span class="i" aria-hidden="true">💬</span><b>Pedidos por WhatsApp</b><small>Tus clientes eligen y te escriben con su pedido.</small></div>
+      <div><span class="i" aria-hidden="true">📊</span><b>Panel de control</b><small>Pedidos, solicitudes, métricas y descarga en CSV.</small></div>
+      <div><span class="i" aria-hidden="true">🔔</span><b>Avisos</b><small>Activa las notificaciones desde tu panel.</small></div>
+    </div>
+    <ol class="steps">
+      <li>Cuéntanos qué vendes con el formulario.</li>
+      <li>Creamos tu catálogo y te contactamos.</li>
+      <li>Comparte tu enlace y empieza a recibir pedidos.</li>
+    </ol>
+    <div class="row">
+      <button class="btn light" type="button" id="promo-reg">Registra tu negocio</button>
+      <a class="btn line" id="panel-promo" href="https://admcat.vercel.app/" target="_blank" rel="noopener">Entrar a mi panel</a>
+    </div>
+  </div>
+</section>
 </main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div><a class="logo-sq" href="#" aria-label="Inicio">N</a><h3>Negocios registrados</h3><p>Catálogos locales para descubrir negocios y pedir por WhatsApp.</p></div>
+      <div><h5>Explorar</h5><ul><li><a href="#negocios">Negocios</a></li><li><a href="#para-negocios">Para negocios</a></li></ul></div>
+      <div><h5>Negocios</h5><ul><li><a id="panel-foot" href="https://admcat.vercel.app/" target="_blank" rel="noopener">Panel para negocios</a></li></ul></div>
+    </div>
+    <p class="copy">© 2026 Negocios registrados. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<dialog id="reg" aria-labelledby="reg-t">
+<form id="reg-form">
+  <h2 id="reg-t">Registra tu negocio</h2>
+  <p>Cuéntanos qué vendes y cómo contactarte. Te responderemos para crear tu catálogo.</p>
+  <label>Nombre<input name="customer_name" required maxlength="80" autocomplete="name"></label>
+  <label>WhatsApp<input name="whatsapp" type="tel" maxlength="30" autocomplete="tel"></label>
+  <label>Correo electrónico<input name="email" type="email" maxlength="120" autocomplete="email"></label>
+  <label>Tu negocio<textarea name="project_details" required rows="3" maxlength="800" placeholder="Nombre del negocio y qué vendes"></textarea></label>
+  <label class="hp" aria-hidden="true">Web<input name="website" tabindex="-1" autocomplete="off"></label>
+  <label class="chk"><input type="checkbox" name="consent" required> Autorizo guardar estos datos para responder a mi solicitud.</label>
+  <p class="msg" id="reg-msg" role="status"></p>
+  <div class="row"><button class="btn alt" type="button" data-close>Cancelar</button><button class="btn" type="submit">Enviar solicitud</button></div>
+</form>
+<div class="ok" id="reg-ok" hidden><h2>Solicitud enviada</h2><p>Gracias. Te contactaremos pronto por WhatsApp o correo.</p><div class="row"><button class="btn" type="button" data-close>Cerrar</button></div></div>
+</dialog>
 
 <script>
 (function () {
   'use strict';
+  var SUPA = 'https://uazfgshpzvjxsckgkkeu.supabase.co';
+  var KEY = 'sb_publishable_FQQiva6dasJhqpaRXqcl0A_2c5k0anJ';
+  var CATALOG = '/?s=';          // catálogo público: /?s=<slug>
+  var CACHE = 'negocios-cache-v1';
 
-  var SUPABASE_URL = 'https://uazfgshpzvjxsckgkkeu.supabase.co';
-  var SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_FQQiva6dasJhqpaRXqcl0A_2c5k0anJ';
-  // Dirección pública del catálogo de cada negocio: https://appcat.vercel.app/?s=<slug>
-  var CATALOG_PREFIX = '/?s=';
-  var CATALOG_SUFFIX = '';
-
-  // Respaldo: si llega un enlace de catálogo (/?s=slug) y el servidor no lo reescribe a app.html, redirige.
+  // Respaldo: un enlace de catálogo que llegue aquí se envía a app.html
   var legacy = new URLSearchParams(location.search).get('s');
   if (legacy) { location.replace('app.html?s=' + encodeURIComponent(legacy)); return; }
 
-  var grid = document.getElementById('grid');
-  var tools = document.getElementById('tools');
-  var count = document.getElementById('count');
-  var input = document.getElementById('q');
-  var state = document.getElementById('state');
-  var retry = document.getElementById('retry');
-  var businesses = [];
+  var $ = function (id) { return document.getElementById(id); };
+  var grid = $('grid'), tools = $('tools'), cats = $('cats'), meta = $('meta'), st = $('state');
+  var list = [], filt = { q: '', cat: '', zone: '', open: false };
 
-  function safeImage(value) {
-    try {
-      var url = new URL(value);
-      return url.origin === new URL(SUPABASE_URL).origin &&
-        url.pathname.indexOf('/storage/v1/object/public/dwokd-site-assets/') === 0 ? url.href : '';
-    } catch (e) { return ''; }
+  function api(path) {
+    return fetch(SUPA + '/rest/v1/' + path, { headers: { apikey: KEY }, cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); });
+  }
+  function insert(table, row, keep) {
+    return fetch(SUPA + '/rest/v1/' + table, { method: 'POST', keepalive: !!keep,
+      headers: { apikey: KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' }, body: JSON.stringify(row) })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); });
+  }
+  function track(name, label) { insert('dwokd_metrics', { event_name: name, event_label: label, page_path: '/' }, true).catch(function () {}); }
+  function norm(t) { return String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+  function img(v) {
+    try { var u = new URL(v); return u.origin === SUPA && u.pathname.indexOf('/storage/v1/object/public/dwokd-site-assets/') === 0 ? u.href : ''; } catch (e) { return ''; }
+  }
+  function price(v) { var n = Number(v); return n > 0 ? n.toLocaleString('es', { maximumFractionDigits: 2 }) : ''; }
+  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+
+  /* ---- Abierto ahora (hora de Cuba) ---- */
+  var DAYS = { domingo: 0, lunes: 1, martes: 2, miercoles: 3, jueves: 4, viernes: 5, sabado: 6 };
+  function havanaNow() {
+    var p = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Havana', weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: false }).formatToParts(new Date());
+    var g = function (t) { return p.filter(function (x) { return x.type === t; })[0].value; };
+    return { d: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(g('weekday')), m: (Number(g('hour')) % 24) * 60 + Number(g('minute')) };
+  }
+  function openDays(text) {
+    var t = norm(text), set = {}, i;
+    if (/todos los dias|diario/.test(t)) return [0, 1, 2, 3, 4, 5, 6];
+    var names = Object.keys(DAYS), re = new RegExp('(' + names.join('|') + ')\\s+(?:a|al|hasta)\\s+(' + names.join('|') + ')');
+    var r = t.match(re);
+    if (r) { for (i = DAYS[r[1]]; ; i = (i + 1) % 7) { set[i] = 1; if (i === DAYS[r[2]]) break; } }
+    else names.forEach(function (n) { if (t.indexOf(n) !== -1) set[DAYS[n]] = 1; });
+    return Object.keys(set).map(Number);
+  }
+  function openHours(text) {
+    var re = /(\d{1,2})(?::(\d{2}))?\s*([ap])?\.?m?\.?/gi, s = String(text || ''), out = [], m;
+    while ((m = re.exec(s)) && out.length < 2) {
+      var h = Number(m[1]), mi = Number(m[2] || 0), ap = (m[3] || '').toLowerCase();
+      if (h > 24 || mi > 59) return null;
+      if (ap === 'p' && h < 12) h += 12; if (ap === 'a' && h === 12) h = 0;
+      out.push(h * 60 + mi);
+    }
+    return out.length === 2 ? out : null;
+  }
+  function status(c) {
+    var days = openDays(c.openDays), hrs = openHours(c.openHours);
+    if (!days.length || !hrs) return '';
+    var n = havanaNow(), inH = hrs[0] <= hrs[1] ? n.m >= hrs[0] && n.m < hrs[1] : n.m >= hrs[0] || n.m < hrs[1];
+    return days.indexOf(n.d) !== -1 && inH ? 'open' : 'closed';
   }
 
-  function normalize(text) {
-    return String(text || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  /* ---- Datos ---- */
+  function build(sites, items) {
+    var by = {};
+    (items || []).forEach(function (i) { (by[i.site_id] = by[i.site_id] || []).push(i); });
+    return sites.filter(function (s) { return s && s.slug; }).map(function (s) {
+      var set = s.settings && typeof s.settings === 'object' ? s.settings : {};
+      var c = set.content || {}, im = set.images || {}, own = by[s.id] || [];
+      var wa = String(c.whatsappNumber || '').replace(/\D/g, '');
+      return { slug: s.slug, name: s.name || c.headline || s.slug, desc: c.metaDescription || c.deliveryLabel || '',
+        photo: img(im.photoUrl), logo: img(im.logoUrl), wa: /^[0-9]{8,15}$/.test(wa) ? wa : '',
+        cat: String(c.category || '').trim(), zone: String(c.zone || String(c.locationName || '').split(',')[0]).trim(),
+        feat: c.featured === true, days: c.openDays || '', hours: c.openHours || '', status: status(c),
+        n: own.length, prods: own.slice(0, 3).map(function (i) { return { n: i.name, p: price(i.price) }; }) };
+    }).sort(function (a, b) { return (b.feat - a.feat) || a.name.localeCompare(b.name, 'es'); });
   }
 
-  function showState(title, text, withRetry) {
-    grid.hidden = true;
-    tools.hidden = true;
-    document.getElementById('state-title').textContent = title;
-    document.getElementById('state-text').textContent = text;
-    retry.hidden = !withRetry;
-    state.hidden = false;
+  function card(b) {
+    var li = el('li'), a = el('article', 'card'), cv = el('div', 'cover'), main = b.photo || b.logo;
+    function ini() { return el('div', 'ini', (b.name.trim().charAt(0) || '?').toUpperCase()); }
+    if (main) { var im = el('img'); im.alt = ''; im.loading = 'lazy'; im.src = main; im.onerror = function () { im.replaceWith(ini()); }; cv.appendChild(im); } else cv.appendChild(ini());
+    if (b.photo && b.logo) { var lg = el('img', 'logo'); lg.alt = ''; lg.loading = 'lazy'; lg.src = b.logo; cv.appendChild(lg); }
+    if (b.status) cv.appendChild(el('span', 'tag st ' + b.status, b.status === 'open' ? 'Abierto ahora' : 'Cerrado ahora'));
+    if (b.feat) cv.appendChild(el('span', 'tag fe', 'Destacado'));
+    var body = el('div', 'body'), h = el('h2'), link = el('a', '', b.name);
+    link.href = CATALOG + encodeURIComponent(b.slug); link.addEventListener('click', function () { track('negocio_abierto', b.slug); });
+    h.appendChild(link); body.appendChild(h);
+    var sub = [b.zone, b.cat].filter(Boolean).join(' · '); if (sub) body.appendChild(el('p', 'sub', sub));
+    if (b.desc) body.appendChild(el('p', 'desc', b.desc));
+    if (b.days || b.hours) body.appendChild(el('p', 'sub', [b.days, b.hours].filter(Boolean).join(' · ')));
+    if (b.prods.length) {
+      var ul = el('ul', 'prods');
+      b.prods.forEach(function (p) { var r = el('li'); r.appendChild(el('span', '', p.n)); r.appendChild(el('span', '', p.p)); ul.appendChild(r); });
+      if (b.n > b.prods.length) ul.appendChild(el('li', 'more', '+' + (b.n - b.prods.length) + ' más'));
+      body.appendChild(ul);
+    }
+    var ft = el('div', 'foot'); ft.appendChild(el('span', 'go', 'Ver catálogo'));
+    if (b.wa) {
+      var w = el('a', 'btn wa', 'WhatsApp'); w.target = '_blank'; w.rel = 'noopener';
+      w.href = 'https://wa.me/' + b.wa + '?text=' + encodeURIComponent('Hola ' + b.name + ', quiero hacer un pedido.');
+      w.setAttribute('aria-label', 'Escribir por WhatsApp a ' + b.name);
+      w.addEventListener('click', function () { track('negocio_whatsapp', b.slug); }); ft.appendChild(w);
+    }
+    body.appendChild(ft); a.appendChild(cv); a.appendChild(body); li.appendChild(a); return li;
   }
 
-  function toBusiness(row) {
-    var settings = row.settings && typeof row.settings === 'object' ? row.settings : {};
-    var content = settings.content && typeof settings.content === 'object' ? settings.content : {};
-    var images = settings.images && typeof settings.images === 'object' ? settings.images : {};
-    return {
-      slug: row.slug,
-      name: row.name || content.headline || row.slug,
-      description: (typeof content.metaDescription === 'string' && content.metaDescription) ||
-                   (typeof content.deliveryLabel === 'string' && content.deliveryLabel) || '',
-      photo: safeImage(images.photoUrl),
-      logo: safeImage(images.logoUrl)
-    };
+  function showState(t, p, label, fn) {
+    grid.hidden = true; st.hidden = false; $('st-t').textContent = t; $('st-p').textContent = p;
+    var b = $('st-b'); b.hidden = !label; b.textContent = label || ''; b.onclick = fn;
   }
 
-  function render(list) {
-    grid.textContent = '';
-    grid.setAttribute('aria-busy', 'false');
-    list.forEach(function (b) {
-      var li = document.createElement('li');
-      var a = document.createElement('a');
-      a.className = 'card';
-      a.href = CATALOG_PREFIX + encodeURIComponent(b.slug) + CATALOG_SUFFIX;
-      a.setAttribute('aria-label', 'Ver el catálogo de ' + b.name);
-
-      var cover = document.createElement('div');
-      cover.className = 'cover';
-      var main = b.photo || b.logo;
-      if (main) {
-        var img = document.createElement('img');
-        img.alt = '';
-        img.loading = 'lazy';
-        img.decoding = 'async';
-        img.src = main;
-        img.addEventListener('error', function () { img.replaceWith(initial(b.name)); });
-        cover.appendChild(img);
-      } else {
-        cover.appendChild(initial(b.name));
-      }
-      if (b.photo && b.logo) {
-        var logo = document.createElement('img');
-        logo.className = 'logo';
-        logo.alt = '';
-        logo.loading = 'lazy';
-        logo.src = b.logo;
-        cover.appendChild(logo);
-      }
-
-      var body = document.createElement('div');
-      body.className = 'body';
-      var h = document.createElement('h2');
-      h.textContent = b.name;
-      body.appendChild(h);
-      if (b.description) {
-        var p = document.createElement('p');
-        p.textContent = b.description;
-        body.appendChild(p);
-      }
-      var go = document.createElement('span');
-      go.className = 'go';
-      go.textContent = 'Ver catálogo';
-      body.appendChild(go);
-
-      a.appendChild(cover);
-      a.appendChild(body);
-      li.appendChild(a);
-      grid.appendChild(li);
+  function setupFilters() {
+    var cs = [], zs = [];
+    list.forEach(function (b) { if (b.cat && cs.indexOf(b.cat) < 0) cs.push(b.cat); if (b.zone && zs.indexOf(b.zone) < 0) zs.push(b.zone); });
+    cats.textContent = ''; cats.hidden = cs.length < 2;
+    if (cs.length > 1) ['', ].concat(cs).forEach(function (c) {
+      var x = el('button', 'chip', c || 'Todas'); x.type = 'button'; x.setAttribute('aria-pressed', String(filt.cat === c));
+      x.onclick = function () { filt.cat = c; setupFilters(); apply(); }; cats.appendChild(x);
     });
-    count.textContent = list.length + (list.length === 1 ? ' negocio' : ' negocios');
+    var z = $('zone'); z.hidden = zs.length < 2; z.textContent = '';
+    if (zs.length > 1) { z.appendChild(new Option('Todas las zonas', '')); zs.sort().forEach(function (v) { z.appendChild(new Option(v, v)); }); z.value = filt.zone; }
+    $('open-now').hidden = !list.some(function (b) { return b.status; });
+    tools.hidden = false;
   }
 
-  function initial(name) {
-    var box = document.createElement('div');
-    box.className = 'initial';
-    box.textContent = (name || '?').trim().charAt(0).toUpperCase();
-    return box;
+  function apply() {
+    var q = norm(filt.q.trim());
+    var r = list.filter(function (b) {
+      return (!q || norm(b.name + ' ' + b.desc + ' ' + b.cat + ' ' + b.zone).indexOf(q) >= 0) && (!filt.cat || b.cat === filt.cat) &&
+        (!filt.zone || b.zone === filt.zone) && (!filt.open || b.status === 'open');
+    });
+    meta.textContent = r.length + (r.length === 1 ? ' negocio' : ' negocios');
+    if (!r.length) return showState('Sin resultados', 'Ningún negocio coincide con tu búsqueda o filtros.', 'Quitar filtros', function () {
+      filt = { q: '', cat: '', zone: '', open: false }; $('q').value = ''; $('open-now').setAttribute('aria-pressed', 'false'); setupFilters(); apply(); });
+    st.hidden = true; grid.hidden = false; grid.textContent = ''; grid.setAttribute('aria-busy', 'false');
+    r.forEach(function (b) { grid.appendChild(card(b)); });
   }
 
-  function applyFilter() {
-    var term = normalize(input.value.trim());
-    var list = term ? businesses.filter(function (b) {
-      return normalize(b.name + ' ' + b.description).indexOf(term) !== -1;
-    }) : businesses;
-    if (!list.length) {
-      grid.textContent = '';
-      count.textContent = '0 negocios';
-      showState('Sin resultados', 'No encontramos ningún negocio con «' + input.value.trim() + '». Prueba con otro nombre.', false);
-      tools.hidden = false;
-      return;
-    }
-    state.hidden = true;
-    grid.hidden = false;
-    render(list);
+  function load() {
+    var cached = null;
+    try { cached = JSON.parse(localStorage.getItem(CACHE)); } catch (e) {}
+    if (cached && cached.list && cached.list.length) { list = cached.list; list.forEach(function (b) { b.status = ''; }); setupFilters(); apply(); }
+    else { st.hidden = true; grid.hidden = false; }
+    Promise.all([
+      // Solo negocios publicados y no suspendidos (con respaldo si aún no existe la columna status)
+      api('sites?select=id,slug,name,settings&is_published=eq.true&or=(status.is.null,status.neq.suspended)&order=name.asc')
+        .catch(function () { return api('sites?select=id,slug,name,settings&is_published=eq.true&order=name.asc'); }),
+      api('catalog_items?select=site_id,name,price&is_available=eq.true&order=position.asc&limit=1000').catch(function () { return []; })
+    ]).then(function (res) {
+      list = build(res[0], res[1]);
+      try { localStorage.setItem(CACHE, JSON.stringify({ t: Date.now(), list: list })); } catch (e) {}
+      var pn = $('promo-n');
+      if (list.length) { pn.textContent = list.length + (list.length === 1 ? ' negocio ya tiene' : ' negocios ya tienen') + ' su catálogo aquí'; pn.hidden = false; }
+      if (!list.length) return showState('Aún no hay negocios', 'Cuando se registre el primero, aparecerá aquí.');
+      setupFilters(); apply();
+    }).catch(function () {
+      if (list.length) { meta.textContent += ' · Sin conexión: mostrando la última lista guardada'; return; }
+      showState('No se pudieron cargar los negocios', 'Revisa tu conexión e inténtalo de nuevo.', 'Reintentar', load);
+    });
   }
 
-  async function load() {
-    state.hidden = true;
-    tools.hidden = true;
-    grid.hidden = false;
-    grid.setAttribute('aria-busy', 'true');
-    grid.innerHTML = '<li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li>';
-    try {
-      var response = await fetch(SUPABASE_URL + '/rest/v1/sites?select=slug,name,settings&order=name.asc', {
-        headers: { apikey: SUPABASE_PUBLISHABLE_KEY },
-        cache: 'no-store'
-      });
-      if (!response.ok) throw new Error('Error ' + response.status);
-      var rows = await response.json();
-      businesses = rows.filter(function (r) { return r && r.slug; }).map(toBusiness);
-      if (!businesses.length) {
-        showState('Aún no hay negocios', 'Cuando se registre el primer negocio aparecerá aquí.', false);
-        return;
-      }
-      tools.hidden = false;
-      applyFilter();
-    } catch (error) {
-      console.error('No se pudieron cargar los negocios.', error);
-      showState('No se pudieron cargar los negocios', 'Revisa tu conexión e inténtalo de nuevo.', true);
-    }
-  }
+  $('q').addEventListener('input', function (e) { filt.q = e.target.value; apply(); });
+  $('zone').addEventListener('change', function (e) { filt.zone = e.target.value; apply(); });
+  $('open-now').addEventListener('click', function (e) { filt.open = !filt.open; e.currentTarget.setAttribute('aria-pressed', String(filt.open)); apply(); });
 
-  input.addEventListener('input', applyFilter);
-  retry.addEventListener('click', load);
+  /* ---- Registro de negocio ---- */
+  var dlg = $('reg'), form = $('reg-form'), msg = $('reg-msg');
+  $('reg-open').onclick = function () { dlg.showModal(); };
+  $('promo-reg').onclick = function () { dlg.showModal(); track('promo_registro', 'banner'); };
+  ['panel-top', 'panel-promo', 'panel-foot'].forEach(function (id) {
+    $(id).addEventListener('click', function () { track('panel_click', id); });
+  });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg || e.target.hasAttribute('data-close')) dlg.close(); });
+  dlg.addEventListener('close', function () { form.reset(); form.hidden = false; $('reg-ok').hidden = true; msg.textContent = ''; });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = new FormData(form);
+    if (v.get('website')) return;
+    var email = String(v.get('email') || '').trim().toLowerCase(), wa = String(v.get('whatsapp') || '').trim();
+    if (!email && !wa) { msg.textContent = 'Escribe un correo o un WhatsApp para poder responderte.'; return; }
+    var last = 0; try { last = Number(localStorage.getItem('dk-last-send')) || 0; } catch (x) {}
+    if (Date.now() - last < 20000) { msg.textContent = 'Espera unos segundos antes de enviar otra solicitud.'; return; }
+    try { localStorage.setItem('dk-last-send', String(Date.now())); } catch (x) {}
+    var btn = form.querySelector('[type=submit]'); btn.disabled = true; msg.textContent = 'Enviando tu solicitud...';
+    insert('dwokd_web_leads', { customer_name: String(v.get('customer_name')).trim(), email: email || null, whatsapp: wa || null,
+      project_details: 'Registro de negocio: ' + String(v.get('project_details')).trim(), consent: true })
+      .then(function () { track('registro_negocio', 'Solicitud de registro enviada'); form.hidden = true; $('reg-ok').hidden = false; })
+      .catch(function () { msg.textContent = 'No se pudo enviar. Revisa tu conexión e inténtalo de nuevo.'; })
+      .then(function () { btn.disabled = false; });
+  });
+
+  track('inicio_visita', 'Página inicial');
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(function () {});
   load();
 })();
 </script>
