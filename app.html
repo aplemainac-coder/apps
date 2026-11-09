@@ -354,6 +354,20 @@ h1{font-family:inherit;font-weight:700;letter-spacing:-.035em;line-height:1.08;t
 (function(){var b=document.querySelector('.bar');if(!b)return;function s(){document.documentElement.style.setProperty('--bar-h',(b.offsetHeight+16)+'px')}s();addEventListener('resize',s);if(window.ResizeObserver)new ResizeObserver(s).observe(b)})();
 </script>
 
+<style>
+  .vacio{display:flex;flex-direction:column;align-items:center;gap:10px;margin:22px 0 8px;padding:34px 22px 30px;border-radius:22px;background:#fff;box-shadow:0 0 0 .5px var(--ios-sep,rgba(60,60,67,.16)),0 2px 8px rgba(0,0,0,.03);text-align:center}
+  .vacio-icono{display:grid;place-items:center;width:68px;height:68px;margin-bottom:4px;border-radius:50%;background:color-mix(in srgb,var(--ios-accent,var(--terracota)) 12%,#fff);color:var(--ios-accent,var(--terracota))}
+  .vacio-icono svg{width:32px;height:32px}
+  .vacio-etiqueta{padding:5px 12px;border-radius:999px;background:color-mix(in srgb,var(--ios-accent,var(--terracota)) 12%,#fff);color:var(--ios-accent,var(--terracota));font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+  .vacio h2{margin:2px 0 0;color:var(--tinta);font-size:20px;font-weight:700;line-height:1.25;text-wrap:balance}
+  .vacio p{max-width:30ch;margin:0;color:var(--ios-label,#8a8a8e);font-size:15px;line-height:1.5}
+  .vacio-puntos{display:flex;gap:6px;margin-top:8px}
+  .vacio-puntos i{width:7px;height:7px;border-radius:50%;background:var(--ios-accent,var(--terracota));opacity:.25;animation:vacioPulso 1.4s ease-in-out infinite}
+  .vacio-puntos i:nth-child(2){animation-delay:.2s}
+  .vacio-puntos i:nth-child(3){animation-delay:.4s}
+  @keyframes vacioPulso{0%,100%{opacity:.25;transform:scale(1)}50%{opacity:1;transform:scale(1.25)}}
+  @media (prefers-reduced-motion:reduce){.vacio-puntos i{animation:none;opacity:.6}}
+</style>
 </head>
 <body>
 <div class="bar" aria-label="Acciones">
@@ -1269,10 +1283,37 @@ h1{font-family:inherit;font-weight:700;letter-spacing:-.035em;line-height:1.08;t
       box.hidden = shown === 0;
       buildCatalogTools(box);
       openFromHash();
+      return shown;
     } catch (error) {
       console.error('No se pudo cargar el catálogo.', error);
       box.hidden = true;
+      return -1;
     }
+  }
+
+  function showEmptyState() {
+    var story = document.getElementById('story');
+    if (!story || story.querySelector('.vacio')) return;
+    var box = document.createElement('section');
+    box.className = 'vacio';
+    box.setAttribute('aria-label', 'Página en preparación');
+    var icon = document.createElement('div');
+    icon.className = 'vacio-icono';
+    icon.setAttribute('aria-hidden', 'true');
+    icon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg>';
+    var tag = document.createElement('span');
+    tag.className = 'vacio-etiqueta';
+    tag.textContent = 'Próximamente';
+    var title = document.createElement('h2');
+    title.textContent = 'Estamos preparando esta página';
+    var text = document.createElement('p');
+    text.textContent = 'Muy pronto vas a encontrar aquí el catálogo, los horarios y cómo hacer tu pedido.';
+    var dots = document.createElement('div');
+    dots.className = 'vacio-puntos';
+    dots.setAttribute('aria-hidden', 'true');
+    dots.innerHTML = '<i></i><i></i><i></i>';
+    [icon, tag, title, text, dots].forEach(function(node) { box.appendChild(node); });
+    story.appendChild(box);
   }
 
   async function loadTenantSite() {
@@ -1316,7 +1357,9 @@ h1{font-family:inherit;font-weight:700;letter-spacing:-.035em;line-height:1.08;t
         }
       }
 
-      await loadCatalog(site.id);
+      var shownItems = await loadCatalog(site.id);
+      // Página nueva (sin contenido propio ni productos): en vez de dejarla en blanco, muestra un aviso.
+      if (!isLegacy && !configured && shownItems === 0) showEmptyState();
     } catch (error) {
       console.error('No se pudo cargar el sitio.', error);
       showSiteMessage('No se pudo cargar', 'Revisa tu conexión e inténtalo de nuevo.');
