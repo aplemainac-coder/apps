@@ -1,13 +1,9 @@
 {
   "rewrites": [
-    {
-      "source": "/",
-      "has": [{ "type": "query", "key": "s" }],
-      "destination": "/app.html"
-    },
-    {
-      "source": "/b/:slug",
-      "destination": "/app.html"
-    }
+    { "source": "/", "has": [{ "type": "query", "key": "s" }], "destination": "/app.html" },
+    { "source": "/b/:slug", "destination": "/app.html" },
+    { "source": "/l/:code", "destination": "/go.html" },
+    { "source": "/estadisticas", "destination": "/estadisticas.html" },
+    { "source": "/acortar", "destination": "/acortar.html" }
   ]
 }
